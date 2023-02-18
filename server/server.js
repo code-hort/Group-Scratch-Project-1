@@ -19,21 +19,21 @@ const cohortRoute = require('./routes/cohort.js');
 app.use('/user', userRoute)
 app.use('/cohort', cohortRoute)
 
-app.use('*', (err, req, res) => {
+app.use('*', ( req, res,err) => {
     res.status(404).send({ error: err })
 })
 
 
 app.use((err, req, res, next) => {
-    console.log(err)
-    const defaultErr = {
-        log: `err: ${err}`,
-        status: 500,
-        message: { err: 'error in middleware' }
-    };
-    const errorObj = Object.assign({}, defaultErr, err);
-    console.log(errorObj.log);
-    res.status(errorOBj.status).json(errorObj.message);
+    res.status(500).json(err)
+    // const defaultErr = {
+    //     log: `err: ${err}`,
+    //     status: 500,
+    //     message: { err: 'error in middleware' }
+    // };
+    // const errorObj = Object.assign({}, defaultErr, err);
+    // console.log(errorObj.log);
+    // res.status(errorOBj.status).json(errorObj.message);
 })
 
 app.listen(PORT, () => (
