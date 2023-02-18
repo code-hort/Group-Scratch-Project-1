@@ -4,7 +4,7 @@ const User = require('../model/user');
 
 const userController = {
 
-    async signUp(req, res, next) {
+    async signUp(req, res, next){
         const { username, password } = req.body;
         if (!username || !password) (err) => next(err);
         const user = await new User({
