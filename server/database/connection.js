@@ -15,6 +15,7 @@ const connectDB = async () => {
     // sets the name of the DB that our collections are part of
     dbName: 'codeHort'
 })
+console.log("connected to db")
 // console.log(`MongoDB connected: ${connection.connection.host}`);
 
         } catch(err) { 
