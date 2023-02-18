@@ -1,8 +1,6 @@
 
 const mongoose = require('mongoose')
 
-
-
 const connectDB = async () => { 
     try { 
      await mongoose.connect(process.env.MONGO_URL,{
@@ -18,8 +16,7 @@ console.log(`MongoDB connected: ${connection.connection.host}`);
             console.log(err)
             process.exit(1)
         }
-            //deprecation warning for newURLparser
-            //
+        
         }
 
 

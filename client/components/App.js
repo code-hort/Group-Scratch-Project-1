@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { GoogleLogin } from "@react-oauth/google"
 export default function App(){
     const responseMessage = (response) => {
+
         console.log(response);
     };
     const errorMessage = (error) => {

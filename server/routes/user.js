@@ -1,7 +1,7 @@
 const express = require('express');
 
 const userController = require('../controller/userController')
-
+console.log(userController.signUp)
 const router = express.Router();
 
 router.post('/signup',
