@@ -13,13 +13,13 @@ module.exports = {
             template: './client/index.html'
         })
     ],
-        //  devServer: {
-        //   proxy: {
-        //     '/': 'http://localhost:3000',
+         devServer: {
+          proxy: {
+            '/': 'http://localhost:3000',
            
-        //   },
+          },
        
-        // },
+        },
     module: {
         rules: [
             {
