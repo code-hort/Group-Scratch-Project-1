@@ -14,6 +14,15 @@ userController.signup,
     return res.status(200).json(res.locals.user);
 }
 )
+
+router.post("/login",
+userController.login,
+(req,res,next) => {
+    return res.status(200).json(res.locals.user);
+}
+)
+
+
 router.patch("/addpoint",
 userController.addpoint,
 (req,res,next) => {
@@ -21,8 +30,13 @@ userController.addpoint,
 }
 )
 
+router.delete("/delete",
+userController.delete,
+(req,res,next) => {
+    return res.status(200).json(res.locals.user);
+})
 
-//route
+
 
 
 module.exports = router;
