@@ -1,22 +1,82 @@
-const express = require('express');
 
-const userController = require('../controller/userController')
-console.log(userController.signUp)
+
+const express = require('express')
+
 const router = express.Router();
 
-router.post('/signup',
- userController.signUp,
-  (req,res,next) => {
-    res.status(200).json(res.locals.users)
-})
+const userController = require('../controller/userController');
 
 
-router.patch('/addone',
- userController.addOne,
-  (req,res,next)=>{
-  res.status(200).json(res.locals.users)
- })
 
+router.post("/signup",
+userController.signup,
+(req,res,next) => {
+    return res.status(200).json(res.locals.user);
+}
+)
+router.patch("/addpoint",
+userController.addpoint,
+(req,res,next) => {
+    return res.status(200).json(res.locals.user);
+}
+)
+
+
+//route
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require('express');
+
+// const userController = require('../controller/userController')
+// //console.log(userController.signUp)
+// const router = express.Router();
+
+// router.post('/signup',
+//  userController.signUp,
+//   (req, res, next) => {
+//     res.status(200).json(res.locals.users)
+// })
+
+
+// router.patch('/addone',
+// userController.addOne, 
+//   (req, res, next)=>{
+//   res.status(200).json(res.locals.users)
+//  })
+
+
+
+// module.exports = router;
