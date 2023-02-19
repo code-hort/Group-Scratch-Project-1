@@ -5,7 +5,7 @@ const cohortController = require('../controller/cohortController');
 
 
 
-router.post('/newCohort',
+router.post('/newcohort',
 cohortController.newCohort,
 (req,res,next) => {
     res.status(200).json(res.locals.newCohort)
@@ -17,10 +17,15 @@ cohortController.newCohort,
 // res.status(200).json(res.locals.cohort)
 // )
 
-// router.patch('/chosenUser/:cohort',
-// cohortController.chosenUser,
-// res.status(200).json(res.locals.user)
-// )
+router.patch('/chosenuser/:cohort',
+cohortController.chosenUser,
+(req,res,next)=>{
+    res.status(200).json(res.locals.cohort)
+}
+
+)
+
+
 
 router.get('/:cohort',
 cohortController.getCohort,  
@@ -33,10 +38,10 @@ cohortController.getAllCohorts,
   res.status(200).json(res.locals.cohorts)
 })
 
-router.patch('/resetCohort/:cohort',
+router.patch('/resetcohort/:cohort',
 cohortController.resetCohort,
 (req,res,next) => {
-    return res.status(200).json(res.locals.cohort)
+    res.status(200).json(res.locals.cohort)
 })
 
 
