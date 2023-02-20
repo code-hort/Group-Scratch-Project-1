@@ -20,7 +20,9 @@ cohortController.newCohort,
 router.patch('/chosenuser/:cohort',
 cohortController.chosenUser,
 (req,res,next)=>{
-    res.status(200).json(res.locals.cohort)
+  const user = res.locals.user;
+  const cohort = res.locals.cohort
+    res.status(200).json({cohort: cohort, user:user})
 }
 
 )

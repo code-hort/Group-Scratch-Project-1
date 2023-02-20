@@ -15,6 +15,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [currUser, setCurrUser] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
+  const [cohort, setCohort] = useState('')
 
 
 
@@ -25,7 +26,7 @@ const App = () => {
     setUsername(e.target.value)
   }
   const handlePassword = (e) => setPassword(e.target.value)
-
+  const handleCohort = (e) => setCohort(e.target.value)
 
   //************************ fetch requests ************************* */
   const navigate = useNavigate()
@@ -39,7 +40,7 @@ const App = () => {
       body: JSON.stringify({
         username: username,
         password: password,
-        cohort: 14
+        cohort: cohort
       })
     })
       .then(res => res.json())
@@ -84,7 +85,7 @@ const App = () => {
       .then(response => {
         setAllCohorts(response)
         console.log('app component all cohorts', allCohorts)
-     
+
       })
       .catch(error => console.log('error', error));
   }
@@ -105,7 +106,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
-        getAllCohorts={getAllCohorts}
+          getAllCohorts={getAllCohorts}
         />} />
         <Route path="/login" element={<Login
           username={username}
@@ -117,6 +118,8 @@ const App = () => {
         <Route path="/signup" element={<Signup
           username={username}
           password={password}
+          handleCohort={handleCohort}
+          cohort={cohort}
           handlePassword={handlePassword}
           handleUsername={handleUsername}
           createUser={createUser} />} />
@@ -161,7 +164,7 @@ export default App
 // }
 
 
-      {/* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
+{/* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
         <Link to="/userlogin">
           Title
         </Link>

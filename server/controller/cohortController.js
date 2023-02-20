@@ -20,7 +20,7 @@ const cohortController = {
 
     async newCohort(req, res, next) {
         try {
-            const cohort =  await  new Cohort(
+            const cohort = new Cohort(
                 {
                     cohort: req.body.cohort,
                 })
@@ -62,6 +62,10 @@ const cohortController = {
 },
 async chosenUser (req,res,next) {
   const user = await User.findOne({username:req.body.username})
+//   const user = User.findOneAndUpdate(
+//     {username:req.body.username},
+//     {$inc: {participation:1 }},
+//     {new:true})
     const cohort = await Cohort.findOneAndUpdate(
         {cohort:req.params.cohort},
         {$pull: {students: {username:user.username}}, $push:{chosen:user}},
