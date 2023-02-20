@@ -1,16 +1,15 @@
 import React from 'react'
 import {BrowserRouter} from 'react-router-dom'
-import ReactDOM from 'react-dom';
+import  {createRoot} from 'react-dom/client';
 import App from './components/App';
 import './index.css'
 
 
-// const domeNode = document.getElementById('root')
-// const root = createRoot(domeNode);
+const domeNode = document.getElementById('root')
+const root = createRoot(domeNode);
 
-ReactDOM.render(
+root.render(
   <BrowserRouter> 
    <App />
-     </BrowserRouter>,
-  document.getElementById('root')
+     </BrowserRouter>
 );

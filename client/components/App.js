@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import Loading from "./Loading.js"
+import Cohort from "./Cohort.jsx"
 import Signup from "./Signup.js"
 import Login from "./Login.jsx"
 import Home from "./home.jsx"
+import Nav from "./Nav.js"
+
 
 const App = () => {
   //******************** state *************************************** */
@@ -40,8 +44,8 @@ const App = () => {
     })
       .then(res => res.json())
 
-      // .then(setLoggedIn(true))
-      // .then(res => setCurrUser(res.user))
+    // .then(setLoggedIn(true))
+    // .then(res => setCurrUser(res.user))
     return navigate("/login")
 
   }
@@ -79,30 +83,26 @@ const App = () => {
       .then(response => response.json())
       .then(response => {
         setAllCohorts(response)
-        // console.log(response)
+        console.log(response)
       })
       .catch(error => console.log('error', error));
   }
 
-  // useEffect(() => {
-  //   getAllCohorts()
+  useEffect(() => {
+    getAllCohorts()
 
 
-  // }, [])
+  }, [])
 
-
+  if (!allCohorts) return <Loading />
   return (
     <>
-      <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
-        <Link to="/userlogin">
-          Title
-        </Link>
-      </header>
 
+      <Nav />
       <Routes>
-        <Route path="/home" element={<Home
-        allCohorts={allCohorts}
-         />} />
+        <Route path="/" element={<Home
+          allCohorts={allCohorts}
+        />} />
         <Route path="/login" element={<Login
           username={username}
           password={password}
@@ -110,12 +110,17 @@ const App = () => {
           handleUsername={handleUsername}
           login={login}
         />} />
-        <Route path="/" element={<Signup
+        <Route path="/signup" element={<Signup
           username={username}
           password={password}
           handlePassword={handlePassword}
           handleUsername={handleUsername}
           createUser={createUser} />} />
+        <Route path="/cohort" element={<Cohort
+          allCohorts={allCohorts}
+
+
+        />} />
       </Routes>
 
 
@@ -126,6 +131,12 @@ const App = () => {
 }
 
 export default App
+
+
+
+
+
+
 
 // function App(){
 //     const responseMessage = (response) => {
@@ -144,3 +155,10 @@ export default App
 //         </div>
 //     )
 // }
+
+
+      {/* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
+        <Link to="/userlogin">
+          Title
+        </Link>
+      </header> */}
