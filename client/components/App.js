@@ -67,7 +67,7 @@ const App = () => {
       setCurrUser(res.username);
       setLoggedIn(true)
 
-      return navigate("/home")
+      return navigate("/")
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +83,8 @@ const App = () => {
       .then(response => response.json())
       .then(response => {
         setAllCohorts(response)
-        console.log(response)
+        console.log('app component all cohorts', allCohorts)
+     
       })
       .catch(error => console.log('error', error));
   }
@@ -95,6 +96,8 @@ const App = () => {
   }, [])
 
   if (!allCohorts) return <Loading />
+  console.log('app component all cohorts', allCohorts)
+
   return (
     <>
 
@@ -102,6 +105,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
+        getAllCohorts={getAllCohorts}
         />} />
         <Route path="/login" element={<Login
           username={username}

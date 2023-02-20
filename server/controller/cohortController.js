@@ -64,7 +64,7 @@ async chosenUser (req,res,next) {
   const user = await User.findOne({username:req.body.username})
     const cohort = await Cohort.findOneAndUpdate(
         {cohort:req.params.cohort},
-        {$pull: {students: {username:user}}, $push:{chosen:user}},
+        {$pull: {students: {username:user.username}}, $push:{chosen:user}},
         {new: true})
 
         res.locals.cohort = cohort;
