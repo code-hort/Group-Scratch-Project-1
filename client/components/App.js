@@ -8,6 +8,7 @@ import Home from './home.jsx';
 import Nav from './Nav.js';
 
 console.log('test1');
+console.log('victor testing')
 
 const App = () => {
   //******************** state *************************************** */
