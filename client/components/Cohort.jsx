@@ -1,9 +1,13 @@
 import React from 'react'
 
-const Cohort = (_id, name, randomGenerator) => {
+export default function Cohort({}){
+
+
+
   return (
-    <button onClick={renderGenerator}>{name}</button>
+<>
+  <div></div>
+</>
   )
 }
 
-export default Cohort

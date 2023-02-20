@@ -11,14 +11,16 @@ const userController = require('../controller/userController');
 router.post("/signup",
 userController.signup,
 (req,res,next) => {
-    return res.status(200).json(res.locals.user);
+const cohort = res.locals.cohort;
+const user = res.locals.user
+  res.status(200).json({cohort:cohort, user:user});
 }
 )
 
 router.post("/login",
 userController.login,
 (req,res,next) => {
-    return res.status(200).json(res.locals.user);
+     res.status(200).json(res.locals.user);
 }
 )
 
@@ -26,14 +28,14 @@ userController.login,
 router.patch("/addpoint",
 userController.addpoint,
 (req,res,next) => {
-    return res.status(200).json(res.locals.user);
+  res.status(200).json(res.locals.user);
 }
 )
 
-router.delete("/delete",
+router.delete("/delete/:cohort",
 userController.delete,
 (req,res,next) => {
-    return res.status(200).json(res.locals.user);
+  res.status(200).json(res.locals.cohort);
 })
 
 

@@ -7,7 +7,8 @@
 
 const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
-const Cohort = require('../model/cohortModel')
+const Cohort = require('../model/cohortModel');
+const { findOneAndUpdate } = require('../model/cohortModel');
 
 
 
@@ -19,26 +20,21 @@ const userController = {
                 {
                     username: req.body.username,
                     password: req.body.password,
-                    cohortNumber: req.body.cohortNumber,
+                    cohort: req.body.cohort,
                     isAdmin: req.body.isAdmin
                 });
 
             user.save();
             const cohort = await Cohort.findOneAndUpdate(
-                {cohort: req.body.cohortNumber},
-                {$push: {students: user}},
-                {new:true}
-                );
-                console.log(cohort)
-                console.log(user)
-                res.locals.user = user;
-                res.locals.cohort = cohort;
-                return next()
-
-            //possibly redirect to signup page with then
-
+                { cohort: req.body.cohort },
+                { $push: { students: user } },
+                { new: true }
+            );
             res.locals.user = user;
+            res.locals.cohort = cohort;
             return next()
+
+
         } catch (err) {
             return next({
                 log: `err: ${err}`,
@@ -51,10 +47,8 @@ const userController = {
     async login(req, res, next) {
         const { username, password } = req.body;
         const user = await User.findOne({ username: username })
-
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-            // if isAdmin then you need to redirect them to admin page
             res.locals.user = user;
             next();
         } else {
@@ -65,10 +59,10 @@ const userController = {
     async addpoint(req, res, next) {
         try {
             const user = await User.findOneAndUpdate(
-                { username: req.body.username }, 
+                { username: req.body.username },
                 { $inc: { participation: 1 } },
-                {new: true}
-                );
+                { new: true }
+            );
             user.save();
             //possibly redirect to signup page with then
 
@@ -82,20 +76,21 @@ const userController = {
             })
         }
     },
-    
+
     async delete(req, res, next) {
-       await User.deleteOne({username: req.body.username})
-            if (err){
-                return next({ 
-                    log: 'Error occured in delete middleware',
-                    status: 400,
-                    message: { err: 'Error!'}
-                  })
-            } 
-              res.locals.user = "user deleted"
-              return next();
-        }
-    
+
+        const cohort = await Cohort.findOneAndUpdate(
+            { cohort: req.params.cohort },
+            { $pull: { students: { username: req.body.username },  chosen: { username: req.body.username }  }},
+
+            { new: true })
+        await User.deleteOne({ username: req.body.username })
+
+        res.locals.cohort = cohort;
+        console.log(`user: ${req.body.username} has been deleted`)
+        return next();
+    }
+
 
 
 }

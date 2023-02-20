@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./client/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+    extend: {
+   fontFamily: { 
+    'robotics': ['"Silkscreen'],
+   }
+      }
+    },
+    plugins: [],
+
+  }
+ 
+
