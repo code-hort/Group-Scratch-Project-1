@@ -7,11 +7,6 @@ import Login from "./Login.jsx"
 import Home from "./home.jsx"
 import Nav from "./Nav.js"
 
-console.log('hi git')
-
-console.log('lets try this again')
-
-console.log('third times the charm')
 
 const App = () => {
   //******************** state *************************************** */
