@@ -1,36 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
 
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Login from './Login.jsx';
+import Signup from './Signup';
 
-
-export default function Nav({currUser,signout}) {
-
-
-
-    return (
-
-        <>
-            <div className="flex bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 ... bg-cyan-500 shadow-lg shadow-cyan-500/50 ... justify-between h-24 items-center px-24 outline-double outline-3 outline-offset-2 ... ">
-                <Link className=" w-1/4 text-white" to="/">codeHort</Link>
-                {!currUser &&     <div className="flex w-1/4 items-end justify-end gap-4">
-                    <Link to="/login" className=" text-white">login</Link>
-                    <Link to="/signup" className=" text-white">signup</Link>
-                </div>}
-                {currUser && (
-                    <>
-
-                    <div className="text-white">{`Hello ${currUser.username}`}</div>
-                    <div onClick={signout} className="border text-white">signout</div>
-
-                    </>
-                )}
-            
-
-
-
-            </div>
-        </>
-
-
-    )
+export default function Nav() {
+  return (
+    <>
+      <div className='flex bg-gradient-to-bl from-slate-900 via-gray-600 to-fuchsia-900 justify-between h-24 items-center px-24 outline-double outline-3 outline-offset-2  ... '>
+        <Link
+          className=' text-5xl font-extrabold ... w-1/4 text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 ...'
+          to='/'
+        >
+          codeHort
+        </Link>
+        <div className='flex w-1/4 items-end justify-end gap-4 text-2xl font-extrabold ... w-1/4  font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500..'>
+          <Link
+            to='/login'
+            className=' animate-pulse bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...  font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-10 ......'
+          >
+            login
+          </Link>
+          <Link
+            to='/signup'
+            className='animate-pulse bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ... font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-10  ......'
+          >
+            signup
+          </Link>
+        </div>
+      </div>
+    </>
+  );
 }
+
