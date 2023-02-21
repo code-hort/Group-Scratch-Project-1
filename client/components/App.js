@@ -64,7 +64,7 @@ const App = () => {
       setCurrUser(res);
       setLoggedIn(true)
 
-      return navigate("/Profile")
+      return navigate("/")
     } catch (error) {
       console.log(error);
     }
@@ -128,28 +128,3 @@ const App = () => {
 
 export default App;
 
-// function App(){
-//     const responseMessage = (response) => {
-
-//         console.log(response);
-//     };
-//     const errorMessage = (error) => {
-//         console.log(error);
-//     };
-//     return (
-//         <div>
-//             <h2>React Google Login</h2>
-//             <br />
-//             <br />
-//             <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
-//         </div>
-//     )
-// }
-
-{
-  /* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
-        <Link to="/userlogin">
-          Title
-        </Link>
-      </header> */
-}
