@@ -8,7 +8,7 @@ console.log(process.env.MONGO_URL)
 
 const connectDB = async () => { 
     try { 
-        await mongoose.connect("mongodb+srv://garretthutson:CodeClimb99@cluster0.ilxwjxc.mongodb.net/?retryWrites=true&w=majority",{
+        await mongoose.connect(process.env.MONGO_URL,{
                // options for the connect method to parse the URI
     useNewUrlParser: true,
     useUnifiedTopology: true,
