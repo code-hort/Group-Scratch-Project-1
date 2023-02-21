@@ -11,7 +11,7 @@ export default function Signup({
 }) {
   return (
     <>
-      <div className='font-robotics mt-24 w-1/2 h-96 mx-auto border border-black flex flex-col items-center justify-center align-middle gap-4'>
+      <div className='font-robotics mt-24 w-1/2 h-96 mx-auto border border-black flex flex-col items-center justify-center align-middle gap-4 bg-gradient-to-bl from-slate-900 via-gray-600 to-fuchsia-900 h-24 items-center px-24 outline-double outline-3 outline-offset-2'>
         <div className='font-robotics text-2xl'>Create an Account</div>
         <input
           className='font-robotics text-center border border-blue-500 black w-48 '
@@ -31,7 +31,7 @@ export default function Signup({
           className='font-robotics text-center border border-blue-500 black w-48 '
           onChange={(e) => handleCohort(e)}
           value={cohort}
-          placeholder='cohort only the numbers'
+          placeholder='cohort number'
           type='number'
         ></input>
 
