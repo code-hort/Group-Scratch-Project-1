@@ -6,6 +6,7 @@ const Home = ({ allCohorts, getAllCohorts }) => {
   const [studentsArray, setStudentsArray] = useState('')
   const [openStudentsArray, setOpenStudentsArray] = useState(false)
   const [newCohort, setNewCohort] = useState('')
+  const [chosenStudent, setChosenStudent] = useState('')
 
 
   const handleNewCohort =(e)=>{
@@ -41,6 +42,7 @@ getAllCohorts()
     setChosenCohort(chosenCohort[0])
     let students = chosenCohort[0].students.map(obj => {
       return (
+
           <div
             key={obj._id}
             className="font-robotics bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
@@ -50,6 +52,7 @@ getAllCohorts()
             <div>{obj.participation}</div>
           </div>
       )
+
     })
     setOpenStudentsArray(prev => !prev)
     console.log(openStudentsArray)
@@ -67,6 +70,7 @@ getAllCohorts()
     setChosenCohort(res.cohort)
     setStudentsArray('')
     setOpenStudentsArray(false)
+    setChosenStudent('')
   }
 
   const handleChooseParticpant = async () => {
@@ -85,6 +89,7 @@ getAllCohorts()
     setChosenCohort(res.cohort)
     let students = res.cohort.students.map(obj => {
       return (
+
         <>
           <div key={obj._id}
             className="font-robotics bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
@@ -94,9 +99,11 @@ getAllCohorts()
             <div>{obj.participation}</div>
           </div>
         </>
+
       )
     })
     setStudentsArray(students)
+    setChosenStudent(res.user)
   }
 
   const cohort = allCohorts.map(obj => <div
@@ -108,6 +115,9 @@ getAllCohorts()
 
   return (
     <>
+
+    {chosenStudent && <div>{chosenStudent.username}</div>}
+  
       {cohort}
       {openStudentsArray
         ?
