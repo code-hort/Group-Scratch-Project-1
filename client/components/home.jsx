@@ -43,15 +43,13 @@ const Home = ({ allCohorts, getAllCohorts }) => {
     let students = chosenCohort[0].students.map(obj => {
       return (
 
-    
-       
-          <div key={obj._id}
-            className="font-robotics bg-slate-300 rounded  w-48 h-24 hover:bg-slate-500 border border-black"
-          >
-            <h1 className='text-xl'>{obj.username}</h1>
-            <div className='text-md'>{obj.cohort}</div>
-            <div>{obj.participation}</div>
-          </div>
+        <div key={obj._id}
+        className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+      >
+        <h1 className='text-2xl'>{obj.username}</h1>
+        <div className='text-md'>{obj.cohort}</div>
+        <div>{obj.participation}</div>
+      </div>
     
       )
 
@@ -91,15 +89,13 @@ const Home = ({ allCohorts, getAllCohorts }) => {
     setChosenCohort(res.cohort)
     let students = res.cohort.students.map(obj => {
       return (
-
         <div key={obj._id}
-            className="font-robotics bg-slate-300 rounded  w-48max-w-fit h-24 hover:bg-slate-500 border border-black"
-          >
-            <h1 className='text-xl'>{obj.username}</h1>
-            <div className='text-md'>{obj.cohort}</div>
-            <div>{obj.participation}</div>
-          </div>
-
+        className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+      >
+        <h1 className='text-2xl'>{obj.username}</h1>
+        <div className='text-md'>{obj.cohort}</div>
+        <div>{obj.participation}</div>
+      </div>
       )
     })
     setStudentsArray(students)
@@ -116,40 +112,44 @@ const Home = ({ allCohorts, getAllCohorts }) => {
   </div>)
 
   return (
-    <>
-    <div className='flex justify-between'>
 
+<>
+  <div className='flex justify-between my-8 mx-24'>
     <div>
-      <button className='font-robotics bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 ... br-5 rounded-full px-6 py-5' onClick={handleChooseParticpant}>Choose Participant</button>
-      <button className='font-robotics text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-md text-sm px-3 py-2.5 text-center mr-2 mb-2' onClick={handleCohortReset}>reset</button>
-
-    </div>
-    {chosenStudent && <div className='animate-pulse bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...  font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-10 ......'>{chosenStudent.username}</div>}
-
-     <div className=''>
-
-      <input className='border border-black w- 24 h-fit ' value={newCohort} onChange={(e) => handleNewCohort(e)} />
-      <button onClick={createNewCohort}>create new cohort</button>
-    
-     </div>
-    </div>
-      <div className='flex justify-center'>
-        {cohort}
+      <div className='flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+        <button className=' bg-indigo-900 hover:bg-indigo-800 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={handleChooseParticpant}>Choose participant</button>
+        <button className=' bg-indigo-800 hover:bg-indigo-700 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={handleCohortReset}>Reset</button>
       </div>
-      <div className='flex gap-2'>
-
-      {openStudentsArray
-        ?
-        studentsArray
-
-        :
-        null}
-      </div>
-
+    </div>
     
+    {chosenStudent && (
+      <div className='border border-indigo-800 border-4 rounded-xl'>
+        <div className='text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`${chosenStudent.username}`}
+        </div>
+        <div className='animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`Cohort: ${chosenStudent.cohort}`}
+        </div>
+        <div className='animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`Participation points: ${chosenStudent.participation}`}
+        </div>
+      </div>
+    )}
 
+    <div >
+      <input className='border border-black px-2 py-1 rounded-lg mr-2' value={newCohort} onChange={(e) => handleNewCohort(e)} />
+      <button className='bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewCohort}>Create new cohort</button>
+    </div>
+  </div>
 
-    </>
+  <div className='mt-8 flex justify-center'>
+    {cohort}
+  </div>
+
+  <div className='mx-18 mt-8 flex gap-2 flex-wrap justify-center'>
+    {openStudentsArray ? studentsArray : null}
+  </div>
+</>
 
 
   )
