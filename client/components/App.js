@@ -12,51 +12,46 @@ import Nav from "./Nav.js"
 const App = () => {
   //******************** state *************************************** */
   const [allCohorts, setAllCohorts] = useState('');
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [currUser, setCurrUser] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [cohort, setCohort] = useState('')
-
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [currUser, setCurrUser] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [cohort, setCohort] = useState('');
 
   //******************** handler functions */
 
   const handleUsername = (e) => {
-    console.log(username)
-    setUsername(e.target.value)
-  }
-  const handlePassword = (e) => setPassword(e.target.value)
-  const handleCohort = (e) => setCohort(e.target.value)
+    console.log(username);
+    setUsername(e.target.value);
+  };
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleCohort = (e) => setCohort(e.target.value);
 
   //************************ fetch requests ************************* */
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function createUser() {
-
     fetch('/user/signup', {
       method: 'POST',
       headers: {
-        'Content-Type': 'Application/JSON'
+        'Content-Type': 'Application/JSON',
       },
       body: JSON.stringify({
         username: username,
         password: password,
-        cohort: cohort
-      })
-    })
-      .then(res => res.json())
+        cohort: cohort,
+      }),
+    }).then((res) => res.json());
 
     // .then(setLoggedIn(true))
     // .then(res => setCurrUser(res.user))
-    return navigate("/login")
-
+    return navigate('/login');
   }
   async function login() {
     try {
       let res = await fetch('/user/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'Application/JSON'
+          'Content-Type': 'Application/JSON',
         },
         body: JSON.stringify(
           {
@@ -75,30 +70,26 @@ const App = () => {
     }
   }
   const signout = () => {
-    setLoggedIn(false)
-    setUser('')
-  }
-
+    setLoggedIn(false);
+    setUser('');
+  };
 
   function getAllCohorts() {
-    fetch("/cohort", { method: 'GET' })
-      .then(response => response.json())
-      .then(response => {
-        setAllCohorts(response)
-        console.log('app component all cohorts', allCohorts)
-
+    fetch('/cohort', { method: 'GET' })
+      .then((response) => response.json())
+      .then((response) => {
+        setAllCohorts(response);
+        console.log('app component all cohorts', allCohorts);
       })
-      .catch(error => console.log('error', error));
+      .catch((error) => console.log('error', error));
   }
 
   useEffect(() => {
-    getAllCohorts()
+    getAllCohorts();
+  }, []);
 
-
-  }, [])
-
-  if (!allCohorts) return <Loading />
-  console.log('app component all cohorts', allCohorts)
+  if (!allCohorts) return <Loading />;
+  console.log('app component all cohorts', allCohorts);
 
   return (
     <>
@@ -131,21 +122,11 @@ const App = () => {
           currUser={currUser}
         />} />
       </Routes>
-
-
     </>
+  );
+};
 
-
-  )
-}
-
-export default App
-
-
-
-
-
-
+export default App;
 
 // function App(){
 //     const responseMessage = (response) => {
@@ -165,9 +146,10 @@ export default App
 //     )
 // }
 
-
-{/* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
+{
+  /* <header className="w-full flex justify-between items-center bg-[#C0C0C0]">
         <Link to="/userlogin">
           Title
         </Link>
-      </header> */}
+      </header> */
+}
