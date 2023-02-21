@@ -64,7 +64,7 @@ const App = () => {
       setCurrUser(res);
       setLoggedIn(true)
 
-      return navigate("/")
+      return navigate("/Profile")
     } catch (error) {
       console.log(error);
     }
@@ -92,13 +92,14 @@ const App = () => {
   console.log('app component all cohorts', allCohorts);
 
   return (
-    <>
+    <div className="">
 
       <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
           getAllCohorts={getAllCohorts}
+          createUser={createUser}
         />} />
         <Route path="/login" element={<Login
           username={username}
@@ -119,7 +120,7 @@ const App = () => {
           currUser={currUser}
         />} />
       </Routes>
-    </>
+    </div>
   );
 };
 

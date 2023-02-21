@@ -39,7 +39,7 @@ const cohortController = {
 
 
     async resetCohort(req, res, next) {
-        try {
+       
             const cohort = await Cohort.findOne({ cohort: req.params.cohort });
             const studentsArray = cohort.students;
             const chosenArray = cohort.chosen;
@@ -51,14 +51,16 @@ const cohortController = {
                 { new: true })
             res.locals.cohort = resetCohort
             return next();
-        } catch (error) {
-            return next({
-                log: `err: ${err}`,
-                status: 500,
-                message: { err: 'error in cohortcontroller.newCohort middleware' }
-            })
+        
 
-        }
+        // catch (error) {
+        //     return next({
+        //         log: `err: ${err}`,
+        //         status: 500,
+        //         message: { err: 'error in cohortcontroller.newCohort middleware' }
+        //     })
+
+        // }
     },
     async chosenUser(req, res, next) {
         //   const user = await User.findOne({username:req.body.username})
@@ -81,7 +83,7 @@ const cohortController = {
 
 
     // async addStudent(req,res,next) {
-    //     const student = await 
+
     // }
 
 }

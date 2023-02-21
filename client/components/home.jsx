@@ -1,18 +1,47 @@
 import React, { useEffect, useState } from 'react'
 
 
-const Home = ({ allCohorts, getAllCohorts }) => {
+const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [chosenCohort, setChosenCohort] = useState('')
   const [studentsArray, setStudentsArray] = useState('')
   const [openStudentsArray, setOpenStudentsArray] = useState(false)
   const [newCohort, setNewCohort] = useState('')
   const [chosenStudent, setChosenStudent] = useState('')
+  const [newStudent, setNewStudent] = useState('')
+  const [newStudentCohort, setNewStudentCohort] = useState('')
 
+  const handleNewStudent = (e) => {
+    setNewStudent(e.target.value)
+    console.log(newStudent)
+  }
+
+  const handleNewStudentCohort = (e) => {
+    setNewStudentCohort(e.target.value)
+    console.log(newStudentCohort)
+  }
 
   const handleNewCohort = (e) => {
     setNewCohort(e.target.value)
     console.log(newCohort)
   }
+
+  const createNewStudent = async () => {
+    console.log("about to create new student")
+    fetch('/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({
+        username: newStudent,
+        password: 'password',
+        cohort: newStudentCohort,
+      }),
+    }).then((res) => res.json());
+    console.log("create response", res)
+    getAllCohorts();
+  }
+
 
   const createNewCohort = async () => {
     console.log("about to create new cohort")
@@ -33,7 +62,7 @@ const Home = ({ allCohorts, getAllCohorts }) => {
 
   useEffect(() => {
     getAllCohorts()
-  }, [studentsArray, chosenCohort])
+  }, [studentsArray, chosenCohort,allCohorts])
 
   const handleClickedCohort = (id) => {
     const chosenCohort = allCohorts.filter(obj => {
@@ -105,7 +134,8 @@ const Home = ({ allCohorts, getAllCohorts }) => {
 
 
   const cohort = allCohorts.map(obj => <div
-    className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black m-2'
+    className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
+    hover effect 1'
     onClick={() => handleClickedCohort(obj._id)}
     key={obj._id}
   >{`Cohort ${obj.cohort}`}
@@ -137,18 +167,24 @@ const Home = ({ allCohorts, getAllCohorts }) => {
     )}
 
     <div >
-      <input className='border border-black px-2 py-1 rounded-lg mr-2' value={newCohort} onChange={(e) => handleNewCohort(e)} />
-      <button className='bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewCohort}>Create new cohort</button>
+      <input type='number' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newCohort} onChange={(e) => handleNewCohort(e)} />
+      <button className='font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewCohort}>Create new cohort</button>
     </div>
+   
   </div>
 
-  <div className='mt-8 flex justify-center'>
+  <div className='mt-8 gap-2 flex justify-center'>
     {cohort}
   </div>
 
-  <div className='mx-18 mt-8 flex gap-2 flex-wrap justify-center'>
+  <div className='mx-18 mt-8 gap-2 flex  flex-wrap justify-center'>
     {openStudentsArray ? studentsArray : null}
   </div>
+  <div className='text-center mr-8 mt-8'>
+    <input placeholder='first and last name' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newStudent} onChange={(e) => handleNewStudent(e)} />
+    <input placeholder='cohort' type='number' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newStudentCohort} onChange={(e) => handleNewStudentCohort(e)} />
+      <button className='font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewStudent}>Add student</button>
+    </div>
 </>
 
 
