@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+
 const Home = ({ allCohorts, getAllCohorts }) => {
   const [chosenCohort, setChosenCohort] = useState('')
   const [studentsArray, setStudentsArray] = useState('')
@@ -42,7 +43,7 @@ getAllCohorts()
       return (
           <div
             key={obj._id}
-            className="bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
+            className="font-robotics bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
           >
             <h1 className='text-xl'>{obj.username}</h1>
             <div className='text-md'>{obj.cohort}</div>
@@ -86,7 +87,7 @@ getAllCohorts()
       return (
         <>
           <div key={obj._id}
-            className="bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
+            className="font-robotics bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
           >
             <h1 className='text-xl'>{obj.username}</h1>
             <div className='text-md'>{obj.cohort}</div>
@@ -99,7 +100,7 @@ getAllCohorts()
   }
 
   const cohort = allCohorts.map(obj => <div
-    className='cursor-pointer bg-blue-500 hover:bg-blue-300 hover:text-black w-fit p-4 border border-black m-2'
+    className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black m-2'
     onClick={() => handleClickedCohort(obj._id)}
     key={obj._id}
   >{`Cohort ${obj.cohort}`}
@@ -117,7 +118,7 @@ getAllCohorts()
         
       <button className='font-robotics bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 ... br-5 rounded-full px-6 py-5' onClick={handleChooseParticpant}>Choose Participant</button>
       
-      <button className='text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-md text-sm px-3 py-2.5 text-center mr-2 mb-2' onClick={handleCohortReset}>reset</button>
+      <button className='font-robotics text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-md text-sm px-3 py-2.5 text-center mr-2 mb-2' onClick={handleCohortReset}>reset</button>
 <input className='border border-black w- 24 h-fit ' value={newCohort} onChange={(e)=>handleNewCohort(e)} />
 <button onClick={createNewCohort}>create new cohort</button>
     </>
