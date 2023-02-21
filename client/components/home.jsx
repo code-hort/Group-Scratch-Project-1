@@ -1,37 +1,68 @@
 import React, { useEffect, useState } from 'react'
 
-const Home = ({ allCohorts, getAllCohorts }) => {
+
+const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [chosenCohort, setChosenCohort] = useState('')
   const [studentsArray, setStudentsArray] = useState('')
   const [openStudentsArray, setOpenStudentsArray] = useState(false)
   const [newCohort, setNewCohort] = useState('')
+  const [chosenStudent, setChosenStudent] = useState('')
+  const [newStudent, setNewStudent] = useState('')
+  const [newStudentCohort, setNewStudentCohort] = useState('')
 
+  const handleNewStudent = (e) => {
+    setNewStudent(e.target.value)
+    console.log(newStudent)
+  }
 
-  const handleNewCohort =(e)=>{
+  const handleNewStudentCohort = (e) => {
+    setNewStudentCohort(e.target.value)
+    console.log(newStudentCohort)
+  }
+
+  const handleNewCohort = (e) => {
     setNewCohort(e.target.value)
     console.log(newCohort)
   }
 
-  const createNewCohort = async ()=> {
-console.log("about to create new cohort")
-    let res= await fetch('cohort/newcohort',{
-      method:'POST',
-     headers: {
-      'Content-Type': 'Application/JSON'
-     },
-     body:JSON.stringify({
-      cohort: newCohort
-     })
-    })
-res = await res.json();
-console.log("create response ", res)
+  const createNewStudent = async () => {
+    console.log("about to create new student")
+    fetch('/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({
+        username: newStudent,
+        password: 'password',
+        cohort: newStudentCohort,
+      }),
+    }).then((res) => res.json());
+    console.log("create response", res)
+    getAllCohorts();
+  }
 
-getAllCohorts()
+
+  const createNewCohort = async () => {
+    console.log("about to create new cohort")
+    let res = await fetch('cohort/newcohort', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON'
+      },
+      body: JSON.stringify({
+        cohort: newCohort
+      })
+    })
+    res = await res.json();
+    console.log("create response ", res)
+
+    getAllCohorts()
   }
 
   useEffect(() => {
     getAllCohorts()
-  }, [studentsArray, chosenCohort])
+  }, [studentsArray, chosenCohort,allCohorts])
 
   const handleClickedCohort = (id) => {
     const chosenCohort = allCohorts.filter(obj => {
@@ -40,15 +71,17 @@ getAllCohorts()
     setChosenCohort(chosenCohort[0])
     let students = chosenCohort[0].students.map(obj => {
       return (
-          <div
-            key={obj._id}
-            className="bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
-          >
-            <h1 className='text-xl'>{obj.username}</h1>
-            <div className='text-md'>{obj.cohort}</div>
-            <div>{obj.participation}</div>
-          </div>
+
+        <div key={obj._id}
+        className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+      >
+        <h1 className='text-2xl'>{obj.username}</h1>
+        <div className='text-md'>{obj.cohort}</div>
+        <div>{obj.participation}</div>
+      </div>
+    
       )
+
     })
     setOpenStudentsArray(prev => !prev)
     console.log(openStudentsArray)
@@ -66,6 +99,7 @@ getAllCohorts()
     setChosenCohort(res.cohort)
     setStudentsArray('')
     setOpenStudentsArray(false)
+    setChosenStudent('')
   }
 
   const handleChooseParticpant = async () => {
@@ -84,43 +118,74 @@ getAllCohorts()
     setChosenCohort(res.cohort)
     let students = res.cohort.students.map(obj => {
       return (
-        <>
-          <div key={obj._id}
-            className="bg-slate-300 rounded  w-min-24 max-w-fit h-24 hover:bg-slate-500 border border-black"
-          >
-            <h1 className='text-xl'>{obj.username}</h1>
-            <div className='text-md'>{obj.cohort}</div>
-            <div>{obj.participation}</div>
-          </div>
-        </>
+        <div key={obj._id}
+        className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+      >
+        <h1 className='text-2xl'>{obj.username}</h1>
+        <div className='text-md'>{obj.cohort}</div>
+        <div>{obj.participation}</div>
+      </div>
       )
     })
     setStudentsArray(students)
+    setChosenStudent(res.user)
   }
 
+
+
   const cohort = allCohorts.map(obj => <div
-    className='cursor-pointer bg-blue-500 hover:bg-blue-300 hover:text-black w-fit p-4 border border-black m-2'
+    className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
+    hover effect 1'
     onClick={() => handleClickedCohort(obj._id)}
     key={obj._id}
   >{`Cohort ${obj.cohort}`}
   </div>)
 
   return (
-    <>
-      {cohort}
-      {openStudentsArray
-        ?
-        studentsArray
 
-        :
-        null}
-        
-      <button className='font-robotics bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 ... br-5 rounded-full px-6 py-5' onClick={handleChooseParticpant}>Choose Participant</button>
-      
-      <button className='text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-md text-sm px-3 py-2.5 text-center mr-2 mb-2' onClick={handleCohortReset}>reset</button>
-<input className='border border-black w- 24 h-fit ' value={newCohort} onChange={(e)=>handleNewCohort(e)} />
-<button onClick={createNewCohort}>create new cohort</button>
-    </>
+<>
+  <div className='flex justify-between my-8 mx-24'>
+    <div>
+      <div className='flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+        <button className=' bg-indigo-900 hover:bg-indigo-800 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={handleChooseParticpant}>Choose participant</button>
+        <button className=' bg-indigo-800 hover:bg-indigo-700 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={handleCohortReset}>Reset</button>
+      </div>
+    </div>
+    
+    {chosenStudent && (
+      <div className='border border-indigo-800 border-4 rounded-xl'>
+        <div className='text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`${chosenStudent.username}`}
+        </div>
+        <div className='animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`Cohort: ${chosenStudent.cohort}`}
+        </div>
+        <div className='animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
+          {`Participation points: ${chosenStudent.participation}`}
+        </div>
+      </div>
+    )}
+
+    <div >
+      <input type='number' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newCohort} onChange={(e) => handleNewCohort(e)} />
+      <button className='font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewCohort}>Create new cohort</button>
+    </div>
+   
+  </div>
+
+  <div className='mt-8 gap-2 flex justify-center'>
+    {cohort}
+  </div>
+
+  <div className='mx-18 mt-8 gap-2 flex  flex-wrap justify-center'>
+    {openStudentsArray ? studentsArray : null}
+  </div>
+  <div className='text-center mr-8 mt-8'>
+    <input placeholder='first and last name' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newStudent} onChange={(e) => handleNewStudent(e)} />
+    <input placeholder='cohort' type='number' className='font-robotics border border-black px-2 py-1 rounded-lg mr-2' value={newStudentCohort} onChange={(e) => handleNewStudentCohort(e)} />
+      <button className='font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out' onClick={createNewStudent}>Add student</button>
+    </div>
+</>
 
 
   )
