@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import Loading from "./Loading.js"
+import Profile from "./Profile.js"
 import Cohort from "./Cohort.jsx"
 import Signup from "./Signup.js"
 import Login from "./Login.jsx"
@@ -65,10 +66,10 @@ const App = () => {
         )
       })
       res = await res.json()
-      setCurrUser(res.username);
+      setCurrUser(res);
       setLoggedIn(true)
 
-      return navigate("/")
+      return navigate("/Profile")
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +103,7 @@ const App = () => {
   return (
     <>
 
-      <Nav />
+      <Nav currUser={currUser} signout={signout}/>
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
@@ -125,8 +126,9 @@ const App = () => {
           createUser={createUser} />} />
         <Route path="/cohort" element={<Cohort
           allCohorts={allCohorts}
-
-
+        />} />
+        <Route path="/Profile" element={<Profile
+          currUser={currUser}
         />} />
       </Routes>
 
