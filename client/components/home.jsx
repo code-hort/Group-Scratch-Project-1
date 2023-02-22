@@ -153,9 +153,10 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   };
 
   const cohort = allCohorts.map((obj) => (
-    <button className="cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
+    <button className="cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded"
       onClick={() => handleClickedCohort(obj._id)}
       key={obj._id}
+      >
       {`Cohort ${obj.cohort}`}
     </button>
   ));

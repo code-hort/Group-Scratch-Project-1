@@ -2,6 +2,8 @@ const express = require('express')
 
 const router = express.Router();
 const cohortController = require('../controller/cohortController');
+const cookieController = require('../controller/cookieController');
+const sessionController = require('../controller/sessionController');
 
 
 
@@ -35,6 +37,7 @@ cohortController.getCohort,
   res.status(200).json(res.locals.cohort)
 })
 router.get('/',
+sessionController.checkSession,
 cohortController.getAllCohorts,  
 (req,res,next) => {
   res.status(200).json(res.locals.cohorts)

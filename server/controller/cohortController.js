@@ -37,7 +37,7 @@ const cohortController = {
 
     async newCohort(req, res, next) {
         try {
-            const cohort = new Cohort(
+            const cohort = await new Cohort(
                 {
                     cohort: req.body.cohort,
                 })
@@ -46,7 +46,11 @@ const cohortController = {
             res.locals.newCohort = cohort;
             return next()
         } catch (err) {
-
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in cohortcontroller.newCohort middleware' }
+            })
         }
     },
 

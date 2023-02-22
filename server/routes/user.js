@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router();
 const userController = require('../controller/userController');
+const cookieController = require('../controller/cookieController');
+const sessionController = require('../controller/sessionController');
 
 
 
 router.post("/signup",
 userController.signup,
+cookieController.setCookie,
+sessionController.setSession,
 (req,res,next) => {
 const cohort = res.locals.cohort;
 const user = res.locals.user
@@ -15,6 +19,8 @@ const user = res.locals.user
 
 router.post("/login",
 userController.login,
+cookieController.setCookie,
+sessionController.setSession,
 (req,res,next) => {
      res.status(200).json(res.locals.user);
 }

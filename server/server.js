@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser')
 const app = express();
 const PORT = 3000;
 
@@ -12,6 +13,7 @@ db()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 const userRoute = require('./routes/user.js');
 const cohortRoute = require('./routes/cohort.js');
