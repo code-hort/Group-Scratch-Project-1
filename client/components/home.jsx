@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PopupModal from './PopupModal';
 
 
-const Home = ({ allCohorts, getAllCohorts, createUser }) => {
+const Home = ({ allCohorts, getAllCohorts, createUser, setModalState }) => {
   const [chosenCohort, setChosenCohort] = useState('')
   const [studentsArray, setStudentsArray] = useState('')
   const [openStudentsArray, setOpenStudentsArray] = useState(false)
@@ -91,7 +91,8 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   }
 
   const handleStudentClicked = (e) => {
-    alert('student clicked');
+    setModalState(true)
+    // console.log(e.target);
   }
 
   const handleCohortReset = async () => {

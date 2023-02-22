@@ -25,4 +25,10 @@
   background-color: whitesmoke;
   margin-top: 150px;
   border-radius: 25px;
+  padding: 50px;
+}
+
+.popup-modal > .info-container > header {
+  display: flex;
+  justify-content: space-between;
 }

@@ -97,13 +97,14 @@ const App = () => {
   return (
     <div className="">
 
-      {modalState ? <PopupModal /> : null}
+      {modalState ? <PopupModal setModalState={setModalState} /> : null}
       <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
           getAllCohorts={getAllCohorts}
           createUser={createUser}
+          setModalState={setModalState}
         />} />
         <Route path="/login" element={<Login
           username={username}
