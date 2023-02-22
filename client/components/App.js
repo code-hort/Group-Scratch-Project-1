@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
-import Loading from "./Loading.js"
-import Profile from "./Profile.js"
-import Signup from "./Signup.js"
-import Login from "./Login.jsx"
-import Home from "./home.jsx"
-import Nav from "./Nav.js"
+import React, { useEffect, useState } from 'react';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import Loading from './Loading.js';
+import Profile from './Profile.js';
+import Signup from './Signup.js';
+import Login from './Login.jsx';
+import Home from './home.jsx';
+import Nav from './Nav.js';
+import Add from './Add.jsx';
 
 const App = () => {
   //******************** state *************************************** */
@@ -54,19 +55,19 @@ const App = () => {
         headers: {
           'Content-Type': 'Application/JSON',
         },
-        body: JSON.stringify(
-          {
-            username: username,
-            password: password
-          }
-        )
-      })
-      res = await res.json()
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      res = await res.json();
       setCurrUser(res);
+
       setLoggedIn(true)
       setNewAdmin(res.isAdmin)
 
-      return navigate("/Profile")
+
+      return navigate('/Profile');
     } catch (error) {
       console.log(error);
     }
@@ -95,8 +96,7 @@ const App = () => {
 
   return (
     <div className="">
-
-      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
+      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn} />
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
@@ -124,10 +124,10 @@ const App = () => {
           currUser={currUser}
           newAdmin={newAdmin}
         />} />
+        <Route path="/add" element={<Add />} />
       </Routes>
     </div>
   );
 };
 
 export default App;
-
