@@ -65,7 +65,10 @@ const App = () => {
       setCurrUser(res);
       setLoggedIn(true)
       setNewAdmin(res.isAdmin)
-
+      if (res.isAdmin){
+        console.log(newAdmin)
+        return navigate('/')
+      }
       return navigate("/Profile")
     } catch (error) {
       console.log(error);
