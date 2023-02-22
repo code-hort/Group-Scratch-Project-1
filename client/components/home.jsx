@@ -8,6 +8,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [openStudentsArray, setOpenStudentsArray] = useState(false);
   const [newCohort, setNewCohort] = useState('');
   const [chosenStudent, setChosenStudent] = useState('');
+  const [chosenArray, setChosenArray] = useState('')
 
   const handleNewCohort = (e) => {
     setNewCohort(e.target.value);

@@ -30,6 +30,18 @@ const App = () => {
 
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
+
+  React.useEffect(()=>{
+    const cookieInfo = document.cookie;
+    console.log(cookieInfo);
+    const cookieName = cookieInfo.slice(0,8)
+    if (cookieName==='codehort'){
+      navigate('/')
+    } else {
+      navigate('/login')
+    }
+  }, [])
+
   function createUser() {
     fetch("/user/signup", {
       method: "POST",
@@ -77,6 +89,8 @@ const App = () => {
   const signout = () => {
     setLoggedIn(false);
     setUser("");
+    // deleting cookie should happen here on the back end!
+    // fetch('')
   };
 
   function getAllCohorts() {
