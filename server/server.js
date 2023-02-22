@@ -19,7 +19,7 @@ const cohortRoute = require('./routes/cohort.js');
 app.use('/user', userRoute)
 app.use('/cohort', cohortRoute)
 
-app.use('*', ( req, res,err) => {
+app.use('*', (req, res, err) => {
     res.status(404).send({ error: err })
 })
 

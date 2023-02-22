@@ -7,15 +7,32 @@ const User = require('../model/userModel');
 const cohortController = {
 
     async getCohort(req, res, next) {
-        console.log(req.params.cohort)
-        const cohort = await Cohort.findOne({ cohort: req.params.cohort })
-        res.locals.cohort = cohort;
-        return next()
+        try {
+            console.log(req.params.cohort)
+            const cohort = await Cohort.findOne({ cohort: req.params.cohort })
+            res.locals.cohort = cohort;
+            return next()
+        } catch (err) {
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in cohortcontroller.getCohort middleware' }
+            })
+        }
     },
+
     async getAllCohorts(req, res, next) {
-        const cohorts = await Cohort.find()
-        res.locals.cohorts = cohorts;
-        return next()
+        try {
+            const cohorts = await Cohort.find()
+            res.locals.cohorts = cohorts;
+            return next()
+        } catch (err) {
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in cohortcontroller.getAllCohorts middleware' }
+            })
+        }
     },
 
     async newCohort(req, res, next) {
@@ -29,40 +46,35 @@ const cohortController = {
             res.locals.newCohort = cohort;
             return next()
         } catch (err) {
-            return next({
-                log: `err: ${err}`,
-                status: 500,
-                message: { err: 'error in cohortcontroller.newCohort middleware' }
-            })
+
         }
     },
 
 
     async resetCohort(req, res, next) {
-       
+        try {
             const cohort = await Cohort.findOne({ cohort: req.params.cohort });
             const studentsArray = cohort.students;
             const chosenArray = cohort.chosen;
             const resetArray = studentsArray.concat(chosenArray);
-
+    
             const resetCohort = await Cohort.findOneAndUpdate(
                 { cohort: req.params.cohort },
                 { students: resetArray, chosen: [] },
                 { new: true })
             res.locals.cohort = resetCohort
             return next();
-        
-
-        // catch (error) {
-        //     return next({
-        //         log: `err: ${err}`,
-        //         status: 500,
-        //         message: { err: 'error in cohortcontroller.newCohort middleware' }
-        //     })
-
-        // }
+        } catch (err) {
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in cohortcontroller.resetCohort middleware' }
+            })
+        }
     },
+
     async chosenUser(req, res, next) {
+        try {
         //   const user = await User.findOne({username:req.body.username})
         const user = await User.findOneAndUpdate(
             { username: req.body.username },
@@ -77,14 +89,14 @@ const cohortController = {
         res.locals.cohort = cohort;
         res.locals.user = user
         return next();
+        } catch (err) {
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in cohortcontroller.chosenUser middleware' }
+            })
+        }
     }
-
-
-
-
-    // async addStudent(req,res,next) {
-
-    // }
 
 }
 
