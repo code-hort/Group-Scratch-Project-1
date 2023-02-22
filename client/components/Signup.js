@@ -8,10 +8,12 @@ export default function Signup({
   password,
   cohort,
   handleCohort,
+  handleAdmin
 }) {
+
   return (
     <>
-      <div className='font-robotics mt-24 w-1/2 h-96 mx-auto border border-black flex flex-col items-center justify-center align-middle gap-4 bg-gradient-to-bl from-slate-900 via-gray-600 to-fuchsia-900 h-24 items-center px-24 outline-double outline-3 outline-offset-2'>
+      <div className='font-robotics mt-24 h-96 w-1/2 mx-auto border border-black flex flex-col items-center justify-center align-middle gap-4 bg-gradient-to-bl from-slate-900 via-gray-600 to-fuchsia-900 h-24 px-24 outline-double outline-3 outline-offset-2'>
         <div className='font-robotics text-2xl'>Create an Account</div>
         <input
           className='font-robotics text-center border border-blue-500 black w-48 '
@@ -34,6 +36,13 @@ export default function Signup({
           placeholder='cohort number'
           type='number'
         ></input>
+
+        <input
+          className='font-robotics text-center border border-blue-500 black w-48'
+          onChange={(e) => handleAdmin(e)}
+          placeholder="admin key"
+          type="password">
+        </input>
 
         <button
           className='font-robotics text-center cursor-pointer hover:bg-blue-200 hover:text-black bg-blue-600 text-white border black w-48 '
