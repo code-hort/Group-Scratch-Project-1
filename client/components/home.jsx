@@ -8,19 +8,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [openStudentsArray, setOpenStudentsArray] = useState(false);
   const [newCohort, setNewCohort] = useState('');
   const [chosenStudent, setChosenStudent] = useState('');
-  const [newStudent, setNewStudent] = useState('');
-  const [newStudentCohort, setNewStudentCohort] = useState('');
-  const [chosenArray, setChosenArray] = useState('');
-
-  const handleNewStudent = (e) => {
-    setNewStudent(e.target.value);
-    console.log(newStudent);
-  };
-
-  const handleNewStudentCohort = (e) => {
-    setNewStudentCohort(e.target.value);
-    console.log(newStudentCohort);
-  };
 
   const handleNewCohort = (e) => {
     setNewCohort(e.target.value);
@@ -44,22 +31,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     } catch (err) {
       console.log('Error in deleting selected student');
     }
-  };
-
-  const createNewStudent = async () => {
-    console.log('about to create new student');
-    fetch('/user/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'Application/JSON',
-      },
-      body: JSON.stringify({
-        username: newStudent,
-        password: 'password',
-        cohort: newStudentCohort,
-      }),
-    }).then((res) => res.json());
-    getAllCohorts();
   };
 
   const createNewCohort = async () => {
@@ -208,27 +179,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     return (
       <>
         <div className="mt-8 gap-2 flex justify-center active:">{cohort}</div>
-        <div className="text-center mr-8 mt-8">
-          <input
-            placeholder="first and last name"
-            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-            value={newStudent}
-            onChange={(e) => handleNewStudent(e)}
-          />
-          <input
-            placeholder="cohort"
-            type="number"
-            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-            value={newStudentCohort}
-            onChange={(e) => handleNewStudentCohort(e)}
-          />
-          <button
-            className="font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-            onClick={createNewStudent}
-          >
-            Add student
-          </button>
-        </div>
 
         <div className="flex justify-center my-8 mx-24">
           {chosenStudent && (
