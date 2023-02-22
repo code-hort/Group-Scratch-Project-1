@@ -10,7 +10,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [newStudentCohort, setNewStudentCohort] = useState('');
   const [deleteStudent, setDeleteStudent] = useState('');
 
-
   const handleNewStudent = (e) => {
     setNewStudent(e.target.value);
     console.log(newStudent);
@@ -48,7 +47,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       console.log('Error in deleting selected student');
     }
   };
-
 
   const createNewStudent = async () => {
     console.log('about to create new student');
@@ -108,7 +106,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     });
     setOpenStudentsArray((prev) => !prev);
 
-
     setStudentsArray(students);
   };
   const handleCohortReset = async () => {
@@ -122,7 +119,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
 
     // setOpenStudentsArray(false);
 
- 
     setChosenStudent('');
   };
 
@@ -157,19 +153,10 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   };
 
   const cohort = allCohorts.map((obj) => (
-
-    <button
-      className='cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
-
-    <div
-      className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
-
-    hover effect 1'
+    <button className="cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
       onClick={() => handleClickedCohort(obj._id)}
       key={obj._id}
-    >
       {`Cohort ${obj.cohort}`}
-
     </button>
   ));
 
@@ -199,16 +186,16 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
           </button>
         </div>
 
-            {/* need to fix the styling on this delete button */}
-      <div>
-        <input
-          placeholder="first and last name"
-          className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-          value={deleteStudent}
-          onChange={(e) => handleDeleteStudent(e)}
-        />
-        <button onClick={() => deleteSelectedStudent()}>Delete Button</button>
-      </div>
+        {/* need to fix the styling on this delete button */}
+        <div>
+          <input
+            placeholder="first and last name"
+            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
+            value={deleteStudent}
+            onChange={(e) => handleDeleteStudent(e)}
+          />
+          <button onClick={() => deleteSelectedStudent()}>Delete Button</button>
+        </div>
 
         <div className="flex justify-center my-8 mx-24">
           {chosenStudent && (
@@ -270,8 +257,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
           Create new cohort
         </button>
       </div>
-
-
     </>
   );
 };
