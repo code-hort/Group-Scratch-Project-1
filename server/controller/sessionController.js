@@ -12,7 +12,9 @@ const sessionController = {
     async checkSession(req, res, next) {
         const cookie = req.cookies.codehort;
         const session = await Session.findOne({cookieId: cookie});
-        //if (session === null) res.redirect('/login');
+        console.log(session)
+        // if (session === null)  return res.redirect('/login');
+        // else return next();
         return next();
     },
 

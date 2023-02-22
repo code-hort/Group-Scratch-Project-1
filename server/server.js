@@ -22,7 +22,7 @@ app.use('/user', userRoute)
 app.use('/cohort', cohortRoute)
 
 app.use('*', (req, res, err) => {
-    res.status(404).send({ error: err })
+    res.status(404).send({ error: 'error found here in server.js', err })
 })
 
 
