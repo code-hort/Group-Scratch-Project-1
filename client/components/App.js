@@ -6,6 +6,7 @@ import Signup from "./Signup.js"
 import Login from "./Login.jsx"
 import Home from "./home.jsx"
 import Nav from "./Nav.js"
+import PopupModal from "./PopupModal.js"
 
 console.log('hi git')
 
@@ -17,6 +18,8 @@ const App = () => {
   const [currUser, setCurrUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
+
+  const [modalState, setModalState] = useState(false);
 
   //******************** handler functions */
 
@@ -94,6 +97,7 @@ const App = () => {
   return (
     <div className="">
 
+      {modalState ? <PopupModal /> : null}
       <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
       <Routes>
         <Route path="/" element={<Home

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import PopupModal from './PopupModal';
 
 
 const Home = ({ allCohorts, getAllCohorts, createUser }) => {
@@ -144,6 +145,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   return (
 
 <>
+  {/* {<PopupModal />} */}
   <div className='flex justify-between my-8 mx-24'>
     <div>
       <div className='flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500'>
