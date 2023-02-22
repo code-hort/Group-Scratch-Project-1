@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   cohort: { type: Number, required: true },
   participation: { type: Number, default: 0 },
-  isAdmin: { type: String, default: "" }
+  isAdmin: { type: Boolean, default: false }
 })
 
 UserSchema.pre('save', async function (next) {
