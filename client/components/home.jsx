@@ -62,7 +62,8 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
 
   useEffect(() => {
     getAllCohorts()
-  }, [studentsArray, chosenCohort,allCohorts])
+  }, [])
+  // studentsArray, chosenCohort,allCohorts
 
   const handleClickedCohort = (id) => {
     const chosenCohort = allCohorts.filter(obj => {

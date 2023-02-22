@@ -7,8 +7,6 @@ import Login from "./Login.jsx"
 import Home from "./home.jsx"
 import Nav from "./Nav.js"
 
-console.log('hi git')
-
 const App = () => {
   //******************** state *************************************** */
   const [allCohorts, setAllCohorts] = useState('');
