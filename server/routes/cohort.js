@@ -36,6 +36,7 @@ cohortController.getCohort,
 (req,res,next) => {
   res.status(200).json(res.locals.cohort)
 })
+
 router.get('/',
 //sessionController.checkSession,
 cohortController.getAllCohorts,  
