@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
 const Cohort = require('../model/cohortModel');
@@ -50,9 +43,9 @@ const userController = {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
             res.locals.user = user;
-            next();
+            return next();
         } else {
-            next({ error: "try again" })
+            return next({ error: "try again" })
         }
     },
 
@@ -72,23 +65,30 @@ const userController = {
             return next({
                 log: `err: ${err}`,
                 status: 500,
-                message: { err: 'error in usercontroller.signup middleware' }
+                message: { err: 'error in usercontroller.addpoint middleware' }
             })
         }
     },
 
     async delete(req, res, next) {
-
-        const cohort = await Cohort.findOneAndUpdate(
-            { cohort: req.params.cohort },
-            { $pull: { students: { username: req.body.username },  chosen: { username: req.body.username }  }},
-
-            { new: true })
-        await User.deleteOne({ username: req.body.username })
-
-        res.locals.cohort = cohort;
-        console.log(`user: ${req.body.username} has been deleted`)
-        return next();
+        try {
+            const cohort = await Cohort.findOneAndUpdate(
+                { cohort: req.params.cohort },
+                { $pull: { students: { username: req.body.username },  chosen: { username: req.body.username }  }},
+    
+                { new: true })
+            await User.deleteOne({ username: req.body.username })
+    
+            res.locals.cohort = cohort;
+            console.log(`user: ${req.body.username} has been deleted`)
+            return next();
+        } catch (err) {
+            return next({
+                log: `err: ${err}`,
+                status: 500,
+                message: { err: 'error in usercontroller.delete middleware' }
+            })
+        }
     }
 
 
