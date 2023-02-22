@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react"
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
-import Loading from "./Loading.js"
-import Profile from "./Profile.js"
-import Signup from "./Signup.js"
-import Login from "./Login.jsx"
-import Home from "./home.jsx"
-import Nav from "./Nav.js"
+import React, { useEffect, useState } from 'react';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import Loading from './Loading.js';
+import Profile from './Profile.js';
+import Signup from './Signup.js';
+import Login from './Login.jsx';
+import Home from './home.jsx';
+import Nav from './Nav.js';
+import Add from './Add.jsx';
 
 const App = () => {
   //******************** state *************************************** */
-  const [allCohorts, setAllCohorts] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [currUser, setCurrUser] = useState('');
+  const [allCohorts, setAllCohorts] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [currUser, setCurrUser] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
+  const [newAdmin, setNewAdmin] = React.useState('')
 
   //******************** handler functions */
 
@@ -24,62 +26,65 @@ const App = () => {
   };
   const handlePassword = (e) => setPassword(e.target.value);
   const handleCohort = (e) => setCohort(e.target.value);
+  const handleAdmin = (e) => setNewAdmin(e.target.value)
 
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
   function createUser() {
-    fetch('/user/signup', {
-      method: 'POST',
+    fetch("/user/signup", {
+      method: "POST",
       headers: {
-        'Content-Type': 'Application/JSON',
+        "Content-Type": "Application/JSON",
       },
       body: JSON.stringify({
-        username: username,
-        password: password,
-        cohort: cohort,
+        username,
+        password,
+        cohort,
+        isAdmin: newAdmin,
       }),
     }).then((res) => res.json());
 
     // .then(setLoggedIn(true))
     // .then(res => setCurrUser(res.user))
-    return navigate('/login');
+    return navigate("/login");
   }
   async function login() {
     try {
-      let res = await fetch('/user/login', {
-        method: 'POST',
+      let res = await fetch("/user/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'Application/JSON',
+          "Content-Type": "Application/JSON",
         },
-        body: JSON.stringify(
-          {
-            username: username,
-            password: password
-          }
-        )
-      })
-      res = await res.json()
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      res = await res.json();
       setCurrUser(res);
-      setLoggedIn(true)
 
-      return navigate("/Profile")
+      setLoggedIn(true)
+      setNewAdmin(res.isAdmin)
+
+
+      return navigate('/Profile');
     } catch (error) {
       console.log(error);
     }
   }
   const signout = () => {
     setLoggedIn(false);
-    setUser('');
+    setUser("");
   };
 
   function getAllCohorts() {
-    fetch('/cohort', { method: 'GET' })
+    fetch("/cohort", { method: "GET" })
       .then((response) => response.json())
       .then((response) => {
         setAllCohorts(response);
-        console.log('app component all cohorts', allCohorts);
+        console.log("app component all cohorts", allCohorts);
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => console.log("error", error));
   }
 
   useEffect(() => {
@@ -87,12 +92,11 @@ const App = () => {
   }, []);
 
   if (!allCohorts) return <Loading />;
-  console.log('app component all cohorts', allCohorts);
+  console.log("app component all cohorts", allCohorts);
 
   return (
     <div className="">
-
-      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
+      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn} />
       <Routes>
         <Route path="/" element={<Home
           allCohorts={allCohorts}
@@ -113,14 +117,17 @@ const App = () => {
           cohort={cohort}
           handlePassword={handlePassword}
           handleUsername={handleUsername}
-          createUser={createUser} />} />
+          createUser={createUser} 
+          handleAdmin={handleAdmin}
+          newAdmin={newAdmin}/>} />
         <Route path="/Profile" element={<Profile
           currUser={currUser}
+          newAdmin={newAdmin}
         />} />
+        <Route path="/add" element={<Add />} />
       </Routes>
     </div>
   );
 };
 
 export default App;
-
