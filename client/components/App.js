@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
-import Loading from "./Loading.js"
-import Profile from "./Profile.js"
-import Signup from "./Signup.js"
-import Login from "./Login.jsx"
-import Home from "./home.jsx"
-import Nav from "./Nav.js"
+import React, { useEffect, useState } from 'react';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import Loading from './Loading.js';
+import Profile from './Profile.js';
+import Signup from './Signup.js';
+import Login from './Login.jsx';
+import Home from './home.jsx';
+import Nav from './Nav.js';
+import Add from './Add.jsx';
 
 const App = () => {
   //******************** state *************************************** */
@@ -51,18 +52,16 @@ const App = () => {
         headers: {
           'Content-Type': 'Application/JSON',
         },
-        body: JSON.stringify(
-          {
-            username: username,
-            password: password
-          }
-        )
-      })
-      res = await res.json()
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      res = await res.json();
       setCurrUser(res);
-      setLoggedIn(true)
+      setLoggedIn(true);
 
-      return navigate("/Profile")
+      return navigate('/Profile');
     } catch (error) {
       console.log(error);
     }
@@ -91,36 +90,49 @@ const App = () => {
 
   return (
     <div className="">
-
-      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn}/>
+      <Nav currUser={currUser} signout={signout} loggedIn={loggedIn} />
       <Routes>
-        <Route path="/" element={<Home
-          allCohorts={allCohorts}
-          getAllCohorts={getAllCohorts}
-          createUser={createUser}
-        />} />
-        <Route path="/login" element={<Login
-          username={username}
-          password={password}
-          handlePassword={handlePassword}
-          handleUsername={handleUsername}
-          login={login}
-        />} />
-        <Route path="/signup" element={<Signup
-          username={username}
-          password={password}
-          handleCohort={handleCohort}
-          cohort={cohort}
-          handlePassword={handlePassword}
-          handleUsername={handleUsername}
-          createUser={createUser} />} />
-        <Route path="/Profile" element={<Profile
-          currUser={currUser}
-        />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              allCohorts={allCohorts}
+              getAllCohorts={getAllCohorts}
+              createUser={createUser}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              username={username}
+              password={password}
+              handlePassword={handlePassword}
+              handleUsername={handleUsername}
+              login={login}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Signup
+              username={username}
+              password={password}
+              handleCohort={handleCohort}
+              cohort={cohort}
+              handlePassword={handlePassword}
+              handleUsername={handleUsername}
+              createUser={createUser}
+            />
+          }
+        />
+        <Route path="/Profile" element={<Profile currUser={currUser} />} />
+        <Route path="/add" element={<Add />} />
       </Routes>
     </div>
   );
 };
 
 export default App;
-
