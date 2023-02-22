@@ -32,7 +32,6 @@ module.exports = {
             template: './client/index.html'
         })
     ],
-
     devServer: {
         headers: { 'Access-Control-Allow-Origin': '*' },
         historyApiFallback: true,
@@ -44,10 +43,9 @@ module.exports = {
           '/cohort/**': {
             target: 'http://localhost:3000',
             secure: false,
-          },
+          }
         },
       },
-      
     module: {
         rules: [
             {
@@ -67,5 +65,6 @@ module.exports = {
         ]
     }
 
+}
 }
 
