@@ -42,58 +42,64 @@ const userController = {
       });
     }
   },
-    async login(req, res, next) {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username: username })
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (isMatch) {
-            res.locals.user = user;
-            return next();
-        } else {
-            return next({ error: "try again" })
-        }
-    },
+  async login(req, res, next) {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username: username });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      res.locals.user = user;
+      return next();
+    } else {
+      return next({ error: 'try again' });
+    }
+  },
 
-    async addpoint(req, res, next) {
-        try {
-            const user = await User.findOneAndUpdate(
-                { username: req.body.username },
-                { $inc: { participation: 1 } },
-                { new: true }
-            );
-            user.save();
-            //possibly redirect to signup page with then
+  async addpoint(req, res, next) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { username: req.body.username },
+        { $inc: { participation: 1 } },
+        { new: true }
+      );
+      user.save();
+      //possibly redirect to signup page with then
 
-            res.locals.user = user;
-            return next()
-        } catch (err) {
-            return next({
-                log: `err: ${err}`,
-                status: 500,
-                message: { err: 'error in usercontroller.addpoint middleware' }
-            })
-        }
-    },
+      res.locals.user = user;
+      return next();
+    } catch (err) {
+      return next({
+        log: `err: ${err}`,
+        status: 500,
+        message: { err: 'error in usercontroller.addpoint middleware' },
+      });
+    }
+  },
 
-    async delete(req, res, next) {
-        try {
-            const cohort = await Cohort.findOneAndUpdate(
-                { cohort: req.params.cohort },
-                { $pull: { students: { username: req.body.username },  chosen: { username: req.body.username }  }},
-    
-                { new: true })
-            await User.deleteOne({ username: req.body.username })
-    
-            res.locals.cohort = cohort;
-            console.log(`user: ${req.body.username} has been deleted`)
-            return next();
-        } catch (err) {
-            return next({
-                log: `err: ${err}`,
-                status: 500,
-                message: { err: 'error in usercontroller.delete middleware' }
-            })
-        }
-}
+  async delete(req, res, next) {
+    try {
+      const cohort = await Cohort.findOneAndUpdate(
+        { cohort: req.params.cohort },
+        {
+          $pull: {
+            students: { username: req.body.username },
+            chosen: { username: req.body.username },
+          },
+        },
 
+        { new: true }
+      );
+      await User.deleteOne({ username: req.body.username });
+
+      res.locals.cohort = cohort;
+      console.log(`user: ${req.body.username} has been deleted`);
+      return next();
+    } catch (err) {
+      return next({
+        log: `err: ${err}`,
+        status: 500,
+        message: { err: 'error in usercontroller.delete middleware' },
+      });
+    }
+  },
+};
 module.exports = userController;
