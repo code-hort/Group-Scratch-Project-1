@@ -27,10 +27,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     console.log(newCohort);
   };
 
-  const handleDeleteStudent = (e) => {
-    setDeleteStudent(e.target.value);
-    console.log(deleteStudent);
-  };
   const deleteSelectedStudent = async (deleteStudent, cohort) => {
     try {
       const response = await fetch(`/user/delete/${cohort}`, {
@@ -119,6 +115,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     setStudentsArray(students);
     setChosenArray(chosenCohort[0].chosen);
   };
+
   const handleCohortReset = async () => {
     let res = await fetch(`cohort/resetcohort/${chosenCohort.cohort}`, {
       method: 'PATCH',
