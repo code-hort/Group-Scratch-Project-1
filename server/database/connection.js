@@ -1,21 +1,16 @@
-
-
-
-
-const mongoose = require('mongoose')
-
-console.log(process.env.MONGO_URL)
+const mongoose = require('mongoose');
+const MONGO_URL = 'mongodb+srv://codehort2:codehort2@codehort2cluster.xr6j8xf.mongodb.net/?retryWrites=true&w=majority'
 
 const connectDB = async () => { 
     try { 
-        await mongoose.connect(process.env.MONGO_URL,{
+        await mongoose.connect(MONGO_URL,{
                // options for the connect method to parse the URI
     useNewUrlParser: true,
     useUnifiedTopology: true,
     // sets the name of the DB that our collections are part of
     dbName: 'codeHort'
 })
-console.log("connected to db")
+console.log("Connected to MongoDB");
 // console.log(`MongoDB connected: ${connection.connection.host}`);
 
         } catch(err) { 
