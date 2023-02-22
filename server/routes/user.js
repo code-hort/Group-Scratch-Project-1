@@ -1,78 +1,28 @@
-
-
-const express = require('express')
+const express = require("express");
 
 const router = express.Router();
 
-const userController = require('../controller/userController');
+const userController = require("../controller/userController");
 
+router.post("/signup", userController.signup, (req, res, next) => {
+  const cohort = res.locals.cohort;
+  const user = res.locals.user;
+  res.status(200).json({ cohort: cohort, user: user });
+});
 
-
-router.post("/signup",
-userController.signup,
-(req,res,next) => {
-const cohort = res.locals.cohort;
-const user = res.locals.user
-  res.status(200).json({cohort:cohort, user:user});
-}
-)
-
-router.post("/login",
-userController.login,
-(req,res,next) => {
-     res.status(200).json(res.locals.user);
-}
-)
-
-
-router.patch("/addpoint",
-userController.addpoint,
-(req,res,next) => {
+router.post("/login", userController.login, (req, res, next) => {
   res.status(200).json(res.locals.user);
-}
-)
+});
 
-router.delete("/delete/:cohort",
-userController.delete,
-(req,res,next) => {
+router.patch("/addpoint", userController.addpoint, (req, res, next) => {
+  res.status(200).json(res.locals.user);
+});
+
+router.delete("/delete/:cohort", userController.delete, (req, res, next) => {
   res.status(200).json(res.locals.cohort);
-})
-
-
-
+});
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const express = require('express');
 
@@ -86,13 +36,10 @@ module.exports = router;
 //     res.status(200).json(res.locals.users)
 // })
 
-
 // router.patch('/addone',
-// userController.addOne, 
+// userController.addOne,
 //   (req, res, next)=>{
 //   res.status(200).json(res.locals.users)
 //  })
-
-
 
 // module.exports = router;
