@@ -75,6 +75,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
 
         <div key={obj._id}
         className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+        onClick={(e) => handleStudentClicked(e)}
       >
         <h1 className='text-2xl'>{obj.username}</h1>
         <div className='text-md'>{obj.cohort}</div>
@@ -88,6 +89,11 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     console.log(openStudentsArray)
     setStudentsArray(students)
   }
+
+  const handleStudentClicked = (e) => {
+    alert('student clicked');
+  }
+
   const handleCohortReset = async () => {
 
     let res = await fetch(`cohort/resetcohort/${chosenCohort.cohort}`,
@@ -121,6 +127,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       return (
         <div key={obj._id}
         className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+
       >
         <h1 className='text-2xl'>{obj.username}</h1>
         <div className='text-md'>{obj.cohort}</div>
@@ -131,7 +138,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     setStudentsArray(students)
     setChosenStudent(res.user)
   }
-
 
 
   const cohort = allCohorts.map(obj => <div
