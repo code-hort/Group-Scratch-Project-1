@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
 
 const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [chosenCohort, setChosenCohort] = useState('');
@@ -43,7 +45,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       }),
     });
     res = await res.json();
-    console.log('create response ', res);
 
     getAllCohorts();
   };
@@ -82,25 +83,48 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       );
     });
     setOpenStudentsArray((prev) => !prev);
-
     setStudentsArray(students);
+    setChosenArray(chosenCohort[0].chosen);
   };
+
   const handleCohortReset = async () => {
     let res = await fetch(`cohort/resetcohort/${chosenCohort.cohort}`, {
       method: 'PATCH',
       redirect: 'follow',
     });
     res = await res.json();
-    setChosenCohort(res.cohort);
-    setStudentsArray('');
-
-    // setOpenStudentsArray(false);
-
+    let students = res.students.map((obj) => {
+      return (
+        <div
+          key={obj._id}
+          className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-trash3 fill-red-500 relative left-44 top-1 cursor-pointer"
+            onClick={() => deleteSelectedStudent(obj.username, obj.cohort)}
+            viewBox="0 0 16 16"
+          >
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+          </svg>
+          <h1 className="text-2xl">{obj.username}</h1>
+          <div className="text-md">{obj.cohort}</div>
+          <div>{obj.participation}</div>
+        </div>
+      );
+    });
+    setChosenCohort(res);
+    setStudentsArray(students);
     setChosenStudent('');
+    setChosenArray([]);
   };
 
   const handleChooseParticpant = async () => {
     const randomNum = Math.floor(Math.random() * (studentsArray.length - 1));
+    console.log(chosenCohort);
     const student = chosenCohort.students[randomNum].username;
     let res = await fetch(`/cohort/chosenuser/${chosenCohort.cohort}`, {
       method: 'PATCH',
@@ -119,6 +143,17 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
           key={obj._id}
           className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-trash3 fill-red-500 relative left-44 top-1 cursor-pointer"
+            onClick={() => deleteSelectedStudent(obj.username, obj.cohort)}
+            viewBox="0 0 16 16"
+          >
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+          </svg>
           <h1 className="text-2xl">{obj.username}</h1>
           <div className="text-md">{obj.cohort}</div>
           <div>{obj.participation}</div>
@@ -127,6 +162,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     });
     setStudentsArray(students);
     setChosenStudent(res.user);
+    setChosenArray([res.user, ...chosenArray]);
   };
 
   const cohort = allCohorts.map((obj) => (
@@ -183,6 +219,32 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
         <div className="mx-18 mt-8 gap-2 flex  flex-wrap justify-center">
           {openStudentsArray ? studentsArray : null}
         </div>
+        {chosenArray.length > 0 && (
+          <div className="mx-18 mt-8 gap-2 flex justify-end ">
+            <List
+              sx={{
+                width: '100%',
+                maxWidth: 200,
+                bgcolor: 'background.paper',
+                position: 'relative',
+                overflow: 'auto',
+                maxHeight: 300,
+                textAlign: 'center',
+                fontFamily: 'Silkscreen',
+                '& ul': { padding: 0 },
+              }}
+            >
+              <ListSubheader
+                style={{ fontFamily: 'Silkscreen' }}
+              >{`Chosen Students`}</ListSubheader>
+              {chosenArray.map((chosen, i) => (
+                <ul>
+                  <li key={i}>{chosen.username}</li>
+                </ul>
+              ))}
+            </List>
+          </div>
+        )}
       </>
     );
   }

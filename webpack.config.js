@@ -26,23 +26,46 @@ module.exports = {
         secure: false,
       },
     },
-  },
-  module: {
-    rules: [
-      {
-        test: /.js|jsx$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './client/index.html'
+        })
+    ],
+
+    devServer: {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        historyApiFallback: true,
+        proxy: {
+          '/user/**': {
+            target: 'http://localhost:3000',
+            secure: false,
+          },
+          '/cohort/**': {
+            target: 'http://localhost:3000',
+            secure: false,
           },
         },
       },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
-      },
-    ],
-  },
-};
+      
+    module: {
+        rules: [
+            {
+                test: /.js|jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react']
+                    }
+                }
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader', 'postcss-loader'],
+              },
+        ]
+    }
+
+}
+
