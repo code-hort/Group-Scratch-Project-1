@@ -15,6 +15,7 @@ const App = () => {
   const [currUser, setCurrUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
+  const [newAdmin, setNewAdmin] = React.useState('')
 
   //******************** handler functions */
 
@@ -24,6 +25,7 @@ const App = () => {
   };
   const handlePassword = (e) => setPassword(e.target.value);
   const handleCohort = (e) => setCohort(e.target.value);
+  const handleAdmin = (e) => setNewAdmin(e.target.value)
 
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
@@ -34,9 +36,10 @@ const App = () => {
         'Content-Type': 'Application/JSON',
       },
       body: JSON.stringify({
-        username: username,
-        password: password,
-        cohort: cohort,
+        username,
+        password,
+        cohort,
+        isAdmin: newAdmin,
       }),
     }).then((res) => res.json());
 
@@ -61,6 +64,7 @@ const App = () => {
       res = await res.json()
       setCurrUser(res);
       setLoggedIn(true)
+      setNewAdmin(res.isAdmin)
 
       return navigate("/Profile")
     } catch (error) {
@@ -113,9 +117,12 @@ const App = () => {
           cohort={cohort}
           handlePassword={handlePassword}
           handleUsername={handleUsername}
-          createUser={createUser} />} />
+          createUser={createUser} 
+          handleAdmin={handleAdmin}
+          newAdmin={newAdmin}/>} />
         <Route path="/Profile" element={<Profile
           currUser={currUser}
+          newAdmin={newAdmin}
         />} />
       </Routes>
     </div>
