@@ -10,6 +10,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [newStudentCohort, setNewStudentCohort] = useState('');
   const [deleteStudent, setDeleteStudent] = useState('');
 
+
   const handleNewStudent = (e) => {
     setNewStudent(e.target.value);
     console.log(newStudent);
@@ -47,6 +48,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       console.log('Error in deleting selected student');
     }
   };
+
 
   const createNewStudent = async () => {
     console.log('about to create new student');
@@ -105,6 +107,8 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
       );
     });
     setOpenStudentsArray((prev) => !prev);
+
+
     setStudentsArray(students);
   };
   const handleCohortReset = async () => {
@@ -115,7 +119,10 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
     res = await res.json();
     setChosenCohort(res.cohort);
     setStudentsArray('');
-    setOpenStudentsArray(false);
+
+    // setOpenStudentsArray(false);
+
+ 
     setChosenStudent('');
   };
 
@@ -150,66 +157,49 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   };
 
   const cohort = allCohorts.map((obj) => (
+
+    <button
+      className='cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
+
     <div
       className='cursor-pointer rounded-br-lg bg-gradient-to-bl from-fuchsia-900 via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black  hover:shadow-[0_4px_0px_rgb(222, 111, 12)] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
+
     hover effect 1'
       onClick={() => handleClickedCohort(obj._id)}
       key={obj._id}
     >
       {`Cohort ${obj.cohort}`}
-    </div>
+
+    </button>
   ));
 
-  return (
-    <>
-      <div className="flex justify-between my-8 mx-24">
-        <div>
-          <div className="flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-            <button
-              className=" bg-indigo-900 hover:bg-indigo-800 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-              onClick={handleChooseParticpant}
-            >
-              Choose participant
-            </button>
-            <button
-              className=" bg-indigo-800 hover:bg-indigo-700 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-              onClick={handleCohortReset}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
-
-        {chosenStudent && (
-          <div className="border border-indigo-800 border-4 rounded-xl">
-            <div className="text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-              {`${chosenStudent.username}`}
-            </div>
-            <div className="animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-              {`Cohort: ${chosenStudent.cohort}`}
-            </div>
-            <div className="animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-              {`Participation points: ${chosenStudent.participation}`}
-            </div>
-          </div>
-        )}
-
-        <div>
+  if (openStudentsArray) {
+    return (
+      <>
+        <div className="mt-8 gap-2 flex justify-center active:">{cohort}</div>
+        <div className="text-center mr-8 mt-8">
           <input
+            placeholder="first and last name"
+            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
+            value={newStudent}
+            onChange={(e) => handleNewStudent(e)}
+          />
+          <input
+            placeholder="cohort"
             type="number"
             className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-            value={newCohort}
-            onChange={(e) => handleNewCohort(e)}
+            value={newStudentCohort}
+            onChange={(e) => handleNewStudentCohort(e)}
           />
           <button
             className="font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-            onClick={createNewCohort}
+            onClick={createNewStudent}
           >
-            Create new cohort
+            Add student
           </button>
         </div>
-      </div>
-      {/* need to fix the styling on this delete button */}
+
+            {/* need to fix the styling on this delete button */}
       <div>
         <input
           placeholder="first and last name"
@@ -220,32 +210,68 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
         <button onClick={() => deleteSelectedStudent()}>Delete Button</button>
       </div>
 
-      <div className="mt-8 gap-2 flex justify-center">{cohort}</div>
+        <div className="flex justify-center my-8 mx-24">
+          {chosenStudent && (
+            <div className="border-indigo-800 border-4 rounded-xl">
+              <div className="text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                {`${chosenStudent.username}`}
+              </div>
+              <div className="animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                {`Cohort: ${chosenStudent.cohort}`}
+              </div>
+              <div className="animate-pulse text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                {`Participation points: ${chosenStudent.participation}`}
+              </div>
+            </div>
+          )}
+        </div>
+        <div>
+          <div className="flex justify-center my-8 mx-24">
+            <div>
+              <div className="flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                <button
+                  className=" bg-indigo-900 hover:bg-indigo-800 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out"
+                  onClick={handleChooseParticpant}
+                >
+                  Choose participant
+                </button>
+                <button
+                  className=" bg-indigo-800 hover:bg-indigo-700 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out"
+                  onClick={handleCohortReset}
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div className="mx-18 mt-8 gap-2 flex  flex-wrap justify-center">
-        {openStudentsArray ? studentsArray : null}
-      </div>
-      <div className="text-center mr-8 mt-8">
+        <div className="mx-18 mt-8 gap-2 flex  flex-wrap justify-center">
+          {openStudentsArray ? studentsArray : null}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="mt-8 gap-2 flex justify-center">{cohort}</div>
+      <div className="flex justify-center items-center mt-8">
         <input
-          placeholder="first and last name"
-          className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-          value={newStudent}
-          onChange={(e) => handleNewStudent(e)}
-        />
-        <input
-          placeholder="cohort"
           type="number"
           className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
-          value={newStudentCohort}
-          onChange={(e) => handleNewStudentCohort(e)}
+          value={newCohort}
+          onChange={(e) => handleNewCohort(e)}
         />
         <button
           className="font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-          onClick={createNewStudent}
+          onClick={createNewCohort}
         >
-          Add student
+          Create new cohort
         </button>
       </div>
+
+
     </>
   );
 };
