@@ -3,7 +3,6 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Cabin&family=Oswald&family=PT+Sans&family=Silkscreen&display=swap");
 
-<<<<<<< HEAD
 
 
 * { 
@@ -33,7 +32,3 @@
   display: flex;
   justify-content: space-between;
 }
-=======
-* {
-}
->>>>>>> dev
