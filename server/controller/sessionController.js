@@ -20,6 +20,7 @@ const sessionController = {
 
     async deleteSession(req, res, next) {
         const cookie = req.cookies.codehort;
+        console.log(cookie);
         res.clearCookie('codehort');
         await Session.deleteOne({cookieId: cookie});
         return next();

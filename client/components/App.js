@@ -87,10 +87,16 @@ const App = () => {
     }
   }
   const signout = () => {
+    console.log('clicked signout')
     setLoggedIn(false);
-    setUser("");
+    //setUser("");
     // deleting cookie should happen here on the back end!
-    // fetch('')
+    fetch('/user/logout')
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return navigate('/login');
+    })
   };
 
   function getAllCohorts() {
