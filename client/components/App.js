@@ -16,12 +16,8 @@ const App = () => {
   const [currUser, setCurrUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
-<<<<<<< HEAD
-  const [newAdmin, setNewAdmin] = React.useState('');
-=======
   const [newAdmin, setNewAdmin] = useState('');
   const [userAdmin, setUserAdmin] = useState(false);
->>>>>>> dev
 
   //******************** handler functions */
 
@@ -36,11 +32,7 @@ const App = () => {
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  React.useEffect(() => {
-=======
   useEffect(() => {
->>>>>>> dev
     const cookieInfo = document.cookie;
     console.log(cookieInfo);
     const cookieName = cookieInfo.slice(0, 8);
@@ -63,13 +55,6 @@ const App = () => {
         cohort,
         isAdmin: newAdmin,
       }),
-<<<<<<< HEAD
-    }).then((res) => res.json());
-
-    // .then(setLoggedIn(true))
-    // .then(res => setCurrUser(res.user))
-    return navigate('/login');
-=======
     })
       .then((res) => res.json())
       .then((data) => {
@@ -81,7 +66,6 @@ const App = () => {
         }
         return navigate('/profile');
       });
->>>>>>> dev
   }
   async function login() {
     try {
@@ -97,15 +81,9 @@ const App = () => {
       });
       res = await res.json();
       setCurrUser(res);
-<<<<<<< HEAD
-
-      setLoggedIn(true);
-      setNewAdmin(res.isAdmin);
-=======
       setLoggedIn(true);
       setNewAdmin(res.isAdmin);
       setUserAdmin(res.isAdmin);
->>>>>>> dev
       if (res.isAdmin) {
         console.log(newAdmin);
         return navigate('/');
@@ -118,16 +96,12 @@ const App = () => {
   const signout = () => {
     console.log('clicked signout');
     setLoggedIn(false);
-<<<<<<< HEAD
-    setUser('');
-=======
     setUserAdmin(false);
     setUsername('');
     setPassword('');
     setCurrUser('');
     setCohort('');
     //setUser("");
->>>>>>> dev
     // deleting cookie should happen here on the back end!
     fetch('/user/logout')
       .then((response) => response.json())
@@ -142,8 +116,6 @@ const App = () => {
       .then((response) => response.json())
       .then((response) => {
         setAllCohorts(response);
-<<<<<<< HEAD
-=======
         response.sort((a, b) => {
           if (a.cohort < b.cohort) {
             return -1;
@@ -154,7 +126,6 @@ const App = () => {
         });
         setAllCohorts(response);
         console.log('app component all cohorts', allCohorts);
->>>>>>> dev
       })
       .catch((error) => console.log('error', error));
   }
@@ -177,10 +148,7 @@ const App = () => {
               allCohorts={allCohorts}
               getAllCohorts={getAllCohorts}
               createUser={createUser}
-<<<<<<< HEAD
-=======
               userAdmin={userAdmin}
->>>>>>> dev
             />
           }
         />
@@ -214,17 +182,14 @@ const App = () => {
         />
         <Route
           path="/Profile"
-<<<<<<< HEAD
           element={
             <Profile
               currUser={currUser}
-              newAdmin={newAdmin}
+              userAdmin={userAdmin}
               allCohorts={allCohorts}
+              newAdmin={newAdmin}
             />
           }
-=======
-          element={<Profile currUser={currUser} newAdmin={newAdmin} />}
->>>>>>> dev
         />
         <Route path="/add" element={<Add />} />
       </Routes>

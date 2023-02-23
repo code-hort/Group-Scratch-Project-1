@@ -43,12 +43,12 @@ const Add = () => {
 
   return (
     <>
-      <div className="text-center mr-8 mt-8">
-        <form autoComplete="off" onSubmit={createNewStudent}>
+      <div className="flex flex-row justify-center items-center mr-8 mt-20">
+        <form className="m-8" autoComplete="off" onSubmit={createNewStudent}>
           <input
             required
             placeholder="first and last name"
-            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
+            className="mx-4 h-12 font-robotics border border-black px-2 py-1 rounded-lg mr-2 outline-none focus:outline-fuchsia-500 focus:border-fuchsia-100"
             value={newStudent}
             onChange={(e) => handleNewStudent(e)}
           />
@@ -56,16 +56,18 @@ const Add = () => {
             required
             placeholder="cohort"
             type="number"
-            className="font-robotics border border-black px-2 py-1 rounded-lg mr-2"
+            className="mx-4 h-12 font-robotics border border-black px-2 py-1 rounded-lg mr-2 outline-none focus:outline-fuchsia-500 focus:border-fuchsia-100 "
             value={newStudentCohort}
             onChange={(e) => handleNewStudentCohort(e)}
           />
-          <button
-            className="font-robotics bg-indigo-900 hover:bg-indigo-800 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-            type="submit"
-          >
-            Add student
-          </button>
+          <div className="flex flex-col items-center m-10">
+            <button
+              className="w-3/4 h-16 font-robotics bg-fuchsia-900 hover:bg-indigo-800 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out "
+              type="submit"
+            >
+              Add student
+            </button>
+          </div>
         </form>
       </div>
     </>
