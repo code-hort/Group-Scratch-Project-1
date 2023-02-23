@@ -3,6 +3,7 @@ import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import audio from '../assets/wheel_sfx.mp3';
 import CircularProgress from '@mui/material/CircularProgress';
+import Wheel from './Wheel.js'
 
 const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
   const [chosenCohort, setChosenCohort] = useState('');
@@ -13,6 +14,10 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
   const [chosenArray, setChosenArray] = useState('');
   const [loading, setLoading] = useState(false);
   const [timeoutId, setTimeoutId] = useState('');
+  const [randomNum, setRandomNum] = React.useState(0)
+  const [animationClass, setAnimationClass] = React.useState('')
+  const [wheelChose, setWheelChose] = React.useState('');
+
 
   const playWheel = () => {
     new Audio(audio).play();
@@ -207,23 +212,24 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
     setChosenArray([]);
   };
 
-  const handleChooseParticpant = async () => {
-    playWheel();
-    getAllCohorts();
-    setLoading(true);
+  const handleChooseParticpant = async (chosenUser) => {
+    // playWheel();
+    // getAllCohorts();
+    // setLoading(true);
     setTimeoutId(
       setTimeout(async () => {
-        const randomNum = Math.floor(
-          Math.random() * (studentsArray.length - 1)
-        );
-        const student = chosenCohort.students[randomNum].username;
+        // const randomNum = Math.floor(
+        //   Math.random() * (studentsArray.length - 1)
+        // );
+
+        // const student = chosenCohort.students[randomNum].username;
         let res = await fetch(`/cohort/chosenuser/${chosenCohort.cohort}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'Application/JSON',
           },
           body: JSON.stringify({
-            username: student,
+            username: chosenUser,
           }),
         });
         res = await res.json();
@@ -274,7 +280,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
         setStudentsArray(students);
         setChosenStudent(res.user);
         setChosenArray([res.user, ...chosenArray]);
-      }, 8500)
+      }, 1000)
     );
   };
   const handleVolunteer = async (volunteer, volCohort) => {
@@ -377,16 +383,12 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
         <div className="mt-8 gap-2 flex justify-center active:">{cohort}</div>
         {studentsArray.length > 0 && loading && (
           <div className="flex justify-center my-8 mx-24">
-            <CircularProgress
-              style={{
-                color: 'linear-gradient(to right bottom, #430089, #82ffa1)',
-              }}
-            />
+            <Wheel handleChooseParticpant={handleChooseParticpant} setAnimationClass={setAnimationClass} animationClass={animationClass} setRandomNum={setRandomNum} randomNum={randomNum} studentsArray={chosenCohort.students} setWheelChose={setWheelChose}/>
           </div>
         )}
         <div className="flex justify-center my-8 mx-24">
           {chosenStudent && (
-            <div className="border-indigo-800 border-4 rounded-xl">
+            <div className="border-indigo-800 border-4 rounded-xl z-20">
               <div className="text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
                 {`${chosenStudent.username}`}
               </div>
@@ -406,7 +408,16 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
                 <div className="flex items-end justify-end gap-4 text-2xl font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
                   <button
                     className=" bg-indigo-900 hover:bg-indigo-800 shadow-lg text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-                    onClick={handleChooseParticpant}
+                    onClick={()=>{
+                      // handleChooseParticpant();
+                      playWheel();
+                      getAllCohorts();
+                      setLoading(true);
+                      setAnimationClass('run-animation')
+                      const randomNumber = Math.floor(Math.random()*360)
+                      setRandomNum(randomNumber);
+                    }
+                    }
                   >
                     Choose participant
                   </button>
