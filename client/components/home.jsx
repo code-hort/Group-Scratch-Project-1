@@ -14,8 +14,6 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
   const [loading, setLoading] = useState(false);
   const [timeoutId, setTimeoutId] = useState('');
 
-  console.log('userAdmin: ', userAdmin);
-
   const playWheel = () => {
     new Audio(audio).play();
   };
@@ -38,12 +36,15 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
       });
       const parsedResponse = await response.json();
       let students = parsedResponse.students.map((obj) => {
-        return (
-          <div
-            key={obj._id}
-            className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
-          >
-            {userAdmin && (
+        if (userAdmin) {
+          return (
+            <div
+              key={obj._id}
+              className="font-robotics hover:text-yellow-500 hover:translate-y-1 bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+              onClick={() => {
+                handleVolunteer(obj.username, obj.cohort);
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -55,12 +56,23 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
               >
                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
               </svg>
-            )}
-            <h1 className="text-2xl">{obj.username}</h1>
-            <p className="text-md">{obj.cohort}</p>
-            <p>{obj.participation}</p>
-          </div>
-        );
+              <h1 className="text-2xl">{obj.username}</h1>
+              <p className="text-md">{obj.cohort}</p>
+              <p>{obj.participation}</p>
+            </div>
+          );
+        } else {
+          return (
+            <div
+              key={obj._id}
+              className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded hover:bg-slate-500 border border-black"
+            >
+              <h1 className="text-2xl">{obj.username}</h1>
+              <p className="text-md">{obj.cohort}</p>
+              <p>{obj.participation}</p>
+            </div>
+          );
+        }
       });
       setChosenCohort(parsedResponse);
       setStudentsArray(students);
@@ -98,13 +110,15 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
     setChosenStudent('');
     setChosenCohort(chosenCohort[0]);
     let students = chosenCohort[0].students.map((obj) => {
-      return (
-        <div
-          key={obj._id}
-          className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
-          onClick={() => {handleVolunteer}}
-        >
-          {userAdmin && (
+      if (userAdmin) {
+        return (
+          <div
+            key={obj._id}
+            className="font-robotics hover:text-yellow-500 hover:translate-y-1 bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+            onClick={() => {
+              handleVolunteer(obj.username, obj.cohort);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -116,13 +130,23 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
             >
               <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
             </svg>
-          )}
-
-          <h1 className="text-2xl">{obj.username}</h1>
-          <p className="text-md">{obj.cohort}</p>
-          <p>{obj.participation}</p>
-        </div>
-      );
+            <h1 className="text-2xl">{obj.username}</h1>
+            <p className="text-md">{obj.cohort}</p>
+            <p>{obj.participation}</p>
+          </div>
+        );
+      } else {
+        return (
+          <div
+            key={obj._id}
+            className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded hover:bg-slate-500 border border-black"
+          >
+            <h1 className="text-2xl">{obj.username}</h1>
+            <p className="text-md">{obj.cohort}</p>
+            <p>{obj.participation}</p>
+          </div>
+        );
+      }
     });
     setOpenStudentsArray((prev) => !prev);
     setStudentsArray(students);
@@ -137,12 +161,15 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
     clearTimeout(timeoutId);
     res = await res.json();
     let students = res.students.map((obj) => {
-      return (
-        <div
-          key={obj._id}
-          className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
-        >
-          {userAdmin && (
+      if (userAdmin) {
+        return (
+          <div
+            key={obj._id}
+            className="font-robotics hover:text-yellow-500 hover:translate-y-1 bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+            onClick={() => {
+              handleVolunteer(obj.username, obj.cohort);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -154,12 +181,23 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
             >
               <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
             </svg>
-          )}
-          <h1 className="text-2xl">{obj.username}</h1>
-          <div className="text-md">{obj.cohort}</div>
-          <div>{obj.participation}</div>
-        </div>
-      );
+            <h1 className="text-2xl">{obj.username}</h1>
+            <p className="text-md">{obj.cohort}</p>
+            <p>{obj.participation}</p>
+          </div>
+        );
+      } else {
+        return (
+          <div
+            key={obj._id}
+            className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded hover:bg-slate-500 border border-black"
+          >
+            <h1 className="text-2xl">{obj.username}</h1>
+            <p className="text-md">{obj.cohort}</p>
+            <p>{obj.participation}</p>
+          </div>
+        );
+      }
     });
 
     setLoading(false);
@@ -189,14 +227,18 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
           }),
         });
         res = await res.json();
+        console.log(res);
         setChosenCohort(res.cohort);
         let students = res.cohort.students.map((obj) => {
-          return (
-            <div
-              key={obj._id}
-              className="font-robotics bg-gradient-to-bl w-48 h-24 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
-            >
-              {userAdmin && (
+          if (userAdmin) {
+            return (
+              <div
+                key={obj._id}
+                className="font-robotics hover:text-yellow-500 hover:translate-y-1 bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+                onClick={() => {
+                  handleVolunteer(obj.username, obj.cohort);
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -210,12 +252,23 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
                 >
                   <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                 </svg>
-              )}
-              <h1 className="text-2xl">{obj.username}</h1>
-              <div className="text-md">{obj.cohort}</div>
-              <div>{obj.participation}</div>
-            </div>
-          );
+                <h1 className="text-2xl">{obj.username}</h1>
+                <p className="text-md">{obj.cohort}</p>
+                <p>{obj.participation}</p>
+              </div>
+            );
+          } else {
+            return (
+              <div
+                key={obj._id}
+                className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded hover:bg-slate-500 border border-black"
+              >
+                <h1 className="text-2xl">{obj.username}</h1>
+                <p className="text-md">{obj.cohort}</p>
+                <p>{obj.participation}</p>
+              </div>
+            );
+          }
         });
         setLoading(false);
         setStudentsArray(students);
@@ -224,7 +277,66 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
       }, 8500)
     );
   };
+  const handleVolunteer = async (volunteer, volCohort) => {
+    try {
+      const student = volunteer;
+      const res = await fetch(`/cohort/volunteer/${volCohort}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'Application/JSON',
+        },
+        body: JSON.stringify({
+          username: student,
+        }),
+      });
+      const parsedRes = await res.json();
+      let students = parsedRes.cohort.students.map((obj) => {
+        if (userAdmin) {
+          return (
+            <div
+              key={obj._id}
+              className="font-robotics hover:text-yellow-500 hover:translate-y-1 bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+              onClick={() => {
+                handleVolunteer(obj.username, obj.cohort);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-trash3 fill-red-500 relative left-44 top-1 cursor-pointer"
+                onClick={() => deleteSelectedStudent(obj.username, obj.cohort)}
+                viewBox="0 0 16 16"
+              >
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+              </svg>
+              <h1 className="text-2xl">{obj.username}</h1>
+              <p className="text-md">{obj.cohort}</p>
+              <p>{obj.participation}</p>
+            </div>
+          );
+        } else {
+          return (
+            <div
+              key={obj._id}
+              className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded hover:bg-slate-500 border border-black"
+            >
+              <h1 className="text-2xl">{obj.username}</h1>
+              <p className="text-md">{obj.cohort}</p>
+              <p>{obj.participation}</p>
+            </div>
+          );
+        }
+      });
 
+      setChosenCohort(parsedRes.cohort);
+      setStudentsArray(students);
+      setChosenArray(parsedRes.cohort.chosen);
+    } catch (err) {
+      console.log('Error in handle volunteer, ', err);
+    }
+  };
   const deleteCohort = (cohort) => {
     const options = {
       method: 'POST',
