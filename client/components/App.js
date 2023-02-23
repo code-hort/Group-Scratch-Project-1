@@ -74,7 +74,7 @@ const App = () => {
       });
       res = await res.json();
       setCurrUser(res);
-
+      console.log(res);
       setLoggedIn(true)
       setNewAdmin(res.isAdmin)
       if (res.isAdmin){
