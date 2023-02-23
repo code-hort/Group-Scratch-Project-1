@@ -33,6 +33,7 @@ const userController = {
         res.locals.cohort = cohort;
       }
       res.locals.user = user;
+      
       return next();
     } catch (err) {
       return next({

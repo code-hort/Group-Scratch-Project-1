@@ -26,6 +26,12 @@ router.post(
   }
 );
 
+router.get('/getUser', 
+sessionController.checkSession,
+(req, res, next) => {
+  return res.status(200).json(res.locals.session);
+})
+
 router.get('/logout', sessionController.deleteSession, (req, res, next) => {
   res.status(200).json('from backend');
 });
