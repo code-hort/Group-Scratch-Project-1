@@ -79,7 +79,7 @@ const cohortController = {
 
   async deleteCohort(req, res, next) {
     try {
-      await Cohort.deleteOne({cohort: req.body.cohort});
+      await Cohort.deleteOne({ cohort: req.body.cohort });
       return next();
     } catch (err) {
       return next({
@@ -136,6 +136,32 @@ const cohortController = {
         log: `err: ${err}`,
         status: 500,
         message: { err: 'error in cohortcontroller.chosenUser middleware' },
+      });
+    }
+  },
+
+  async volunteerUser(req, res, next) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { username: req.body.username },
+        { $inc: { participation: 1 } },
+        { new: true }
+      );
+      const cohort = await Cohort.findOneAndUpdate(
+        { 'students.username': user.username },
+        {
+          $set: { 'students.$.participation': user.participation },
+        },
+        { new: true }
+      );
+      res.locals.cohort = cohort;
+      res.locals.user = user;
+      return next();
+    } catch (err) {
+      return next({
+        log: `err: ${err}`,
+        status: 500,
+        message: { err: 'error in cohortcontroller.volunteerUser middleware' },
       });
     }
   },

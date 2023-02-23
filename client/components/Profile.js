@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-const Profile = ({ currUser, newAdmin, allCohorts }) => {
+const Profile = ({ currUser, userAdmin, allCohorts }) => {
   //required state
   const [currCohortData, setCurrCohortData] = useState(null);
   const [sortedUsers, setSortedUsers] = useState([]);
   const [participation, setParticipation] = useState(null);
+  console.log('userAdmin', userAdmin);
 
   //function to sort combined arrays by descending order of participation points
   function sortUsersByParticipation(users) {
@@ -75,7 +76,7 @@ hover effect 1'
         Participation Times: {participation}
       </div>
 
-      {newAdmin && (
+      {userAdmin && (
         <div
           className='cursor-pointer rounded-br-lg via-gray-600 to-fuchsia-900 hover:bg-indigo-500 shadow-lg shadow-indigo-500/50 text-2xl font-extrabold ...text-white font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500... hover:text-black w-fit p-4 border border-black m-2  hover:shadow-[0_4px_0px_rgb()] text-indigo bg-white ease-out hover:translate-y-1 transition-all rounded">
 hover effect 1'
