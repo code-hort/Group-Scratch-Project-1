@@ -16,7 +16,8 @@ const App = () => {
   const [currUser, setCurrUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
-  const [newAdmin, setNewAdmin] = React.useState('');
+  const [newAdmin, setNewAdmin] = useState('');
+  const [userAdmin, setUserAdmin] = useState(false);
 
   //******************** handler functions */
 
@@ -31,7 +32,7 @@ const App = () => {
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const cookieInfo = document.cookie;
     console.log(cookieInfo);
     const cookieName = cookieInfo.slice(0, 8);
@@ -77,6 +78,7 @@ const App = () => {
 
       setLoggedIn(true);
       setNewAdmin(res.isAdmin);
+      setUserAdmin(res.isAdmin);
       if (res.isAdmin) {
         console.log(newAdmin);
         return navigate('/');
@@ -136,6 +138,7 @@ const App = () => {
               allCohorts={allCohorts}
               getAllCohorts={getAllCohorts}
               createUser={createUser}
+              userAdmin={userAdmin}
             />
           }
         />
