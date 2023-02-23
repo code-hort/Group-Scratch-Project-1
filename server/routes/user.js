@@ -26,11 +26,12 @@ sessionController.setSession,
 }
 )
 
-// router.get("/login",
-// (req,res,next) => {
-//      res.status(200).json(res.locals.user);
-// }
-// )
+router.get("/logout",
+sessionController.deleteSession,
+(req,res,next) => {
+     res.status(200).json("from backend");
+}
+)
 
 
 router.patch("/addpoint",
