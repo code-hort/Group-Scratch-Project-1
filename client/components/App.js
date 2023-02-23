@@ -124,7 +124,6 @@ const App = () => {
     fetch('/cohort', { method: 'GET' })
       .then((response) => response.json())
       .then((response) => {
-        setAllCohorts(response);
         response.sort((a, b) => {
           if (a.cohort < b.cohort) {
             return -1;
@@ -191,7 +190,13 @@ const App = () => {
         />
         <Route
           path="/Profile"
-          element={<Profile currUser={currUser} newAdmin={newAdmin} />}
+          element={
+            <Profile
+              currUser={currUser}
+              newAdmin={newAdmin}
+              allCohorts={allCohorts}
+            />
+          }
         />
         <Route path="/add" element={<Add />} />
       </Routes>
