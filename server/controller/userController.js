@@ -21,14 +21,14 @@ const userController = {
         const cohort = await Cohort.findOneAndUpdate(
           { cohort: req.body.cohort },
           { $push: { admin: user } },
-          { new: true }
+          { upsert: true, new: true }
         );
         res.locals.cohort = cohort;
       } else {
         const cohort = await Cohort.findOneAndUpdate(
           { cohort: req.body.cohort },
           { $push: { students: user } },
-          { new: true }
+          { upsert: true, new: true }
         );
         res.locals.cohort = cohort;
       }
