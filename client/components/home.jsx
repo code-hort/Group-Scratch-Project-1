@@ -388,7 +388,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
         )}
         <div className="flex justify-center my-8 mx-24">
           {chosenStudent && (
-            <div className="border-indigo-800 border-4 rounded-xl z-20">
+            <div className="border-indigo-800 border-4 rounded-xl">
               <div className="text-6xl animate-pulse font-extrabold font-robotics bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
                 {`${chosenStudent.username}`}
               </div>

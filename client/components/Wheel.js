@@ -51,7 +51,7 @@ export default function Wheel (props) {
                 // snaps wheel back
                 setTimeout(()=>{
                     props.setAnimationClass('')
-                }, 5000)
+                }, 1000)
                 // console.log(Math.floor((props.randomNum/360)*array.length))
                 const reversed = array.reverse();
                 console.log(reversed[Math.floor((props.randomNum/360)*array.length)])
