@@ -328,9 +328,9 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
                 '& ul': { padding: 0 },
               }}
             >
-              <ListSubheader
-                style={{ fontFamily: 'Silkscreen' }}
-              >{`Chosen Students`}</ListSubheader>
+              <ListSubheader style={{ fontFamily: 'Silkscreen' }}>
+                Past Participants
+              </ListSubheader>
               {chosenArray.map((chosen, i) => (
                 <ul>
                   <li key={i}>{chosen.username}</li>
