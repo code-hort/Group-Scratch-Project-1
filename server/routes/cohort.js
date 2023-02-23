@@ -14,6 +14,13 @@ cohortController.newCohort,
 }
 )
 
+router.post('/delete',
+cohortController.deleteCohort,
+(req,res,next) => {
+    res.status(200).json("cohort deleted")
+}
+)
+
 // router.patch('/addStudent',
 // cohortController.addStudent,
 // res.status(200).json(res.locals.cohort)

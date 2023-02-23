@@ -50,6 +50,19 @@ const cohortController = {
     }
   },
 
+  async deleteCohort(req, res, next) {
+    try {
+      await Cohort.deleteOne({cohort: req.body.cohort});
+      return next();
+    } catch (err) {
+      return next({
+        log: `err: ${err}`,
+        status: 500,
+        message: { err: 'error in cohortcontroller.deleteCohort middleware' },
+      });
+    }
+  },
+
   async resetCohort(req, res, next) {
     try {
       const cohort = await Cohort.findOne({ cohort: req.params.cohort });
