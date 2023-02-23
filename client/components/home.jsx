@@ -101,7 +101,8 @@ const Home = ({ allCohorts, getAllCohorts, createUser, userAdmin }) => {
       return (
         <div
           key={obj._id}
-          className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded   hover:bg-slate-500 border border-black"
+          className="font-robotics bg-gradient-to-bl w-48 h-28 text-white from-slate-900 via-gray-600 to-fuchsia-900 rounded cursor-pointer hover:bg-slate-500 border border-black"
+          onClick={() => {handleVolunteer}}
         >
           {userAdmin && (
             <svg
