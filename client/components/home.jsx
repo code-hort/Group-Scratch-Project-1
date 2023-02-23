@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
+import audio from '../assets/wheel_sfx.mp3';
 
 const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [chosenCohort, setChosenCohort] = useState('');
@@ -8,7 +9,11 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   const [openStudentsArray, setOpenStudentsArray] = useState(false);
   const [newCohort, setNewCohort] = useState('');
   const [chosenStudent, setChosenStudent] = useState('');
-  const [chosenArray, setChosenArray] = useState('')
+  const [chosenArray, setChosenArray] = useState('');
+
+  const playWheel = () => {
+    new Audio(audio).play();
+  };
 
   const handleNewCohort = (e) => {
     setNewCohort(e.target.value);
@@ -149,6 +154,7 @@ const Home = ({ allCohorts, getAllCohorts, createUser }) => {
   };
 
   const handleChooseParticpant = async () => {
+    playWheel();
     getAllCohorts();
     const randomNum = Math.floor(Math.random() * (studentsArray.length - 1));
     const student = chosenCohort.students[randomNum].username;
