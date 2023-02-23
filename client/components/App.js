@@ -55,11 +55,17 @@ const App = () => {
         cohort,
         isAdmin: newAdmin,
       }),
-    }).then((res) => res.json());
-
-    // .then(setLoggedIn(true))
-    // .then(res => setCurrUser(res.user))
-    return navigate('/login');
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCurrUser(data.user);
+        setLoggedIn(true);
+        if (data.user.isAdmin) {
+          setUserAdmin(true);
+          return navigate('/');
+        }
+        return navigate('/profile');
+      });
   }
   async function login() {
     try {
@@ -75,7 +81,6 @@ const App = () => {
       });
       res = await res.json();
       setCurrUser(res);
-
       setLoggedIn(true);
       setNewAdmin(res.isAdmin);
       setUserAdmin(res.isAdmin);
@@ -91,6 +96,11 @@ const App = () => {
   const signout = () => {
     console.log('clicked signout');
     setLoggedIn(false);
+    setUserAdmin(false);
+    setUsername('');
+    setPassword('');
+    setCurrUser('');
+    setCohort('');
     //setUser("");
     // deleting cookie should happen here on the back end!
     fetch('/user/logout')
