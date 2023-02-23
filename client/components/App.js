@@ -124,6 +124,10 @@ const App = () => {
     fetch('/cohort', { method: 'GET' })
       .then((response) => response.json())
       .then((response) => {
+<<<<<<< HEAD
+        setAllCohorts(response);
+=======
+>>>>>>> dev
         response.sort((a, b) => {
           if (a.cohort < b.cohort) {
             return -1;
@@ -193,8 +197,9 @@ const App = () => {
           element={
             <Profile
               currUser={currUser}
-              newAdmin={newAdmin}
+              userAdmin={userAdmin}
               allCohorts={allCohorts}
+              newAdmin={newAdmin}
             />
           }
         />
