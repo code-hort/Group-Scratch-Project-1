@@ -25,6 +25,7 @@ router.get('/:cohort', cohortController.getCohort, (req, res, next) => {
 
 router.post('/delete',
 cohortController.deleteCohort,
+// cohortController.getAllCohorts,
 (req,res,next) => {
     res.status(200).json("cohort deleted")
 }
