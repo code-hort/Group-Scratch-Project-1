@@ -124,10 +124,6 @@ const App = () => {
     fetch('/cohort', { method: 'GET' })
       .then((response) => response.json())
       .then((response) => {
-<<<<<<< HEAD
-        setAllCohorts(response);
-=======
->>>>>>> dev
         response.sort((a, b) => {
           if (a.cohort < b.cohort) {
             return -1;
