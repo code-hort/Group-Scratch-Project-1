@@ -10,13 +10,14 @@ import Add from './Add.jsx';
 
 const App = () => {
   //******************** state *************************************** */
-  const [allCohorts, setAllCohorts] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [currUser, setCurrUser] = useState("");
+  const [allCohorts, setAllCohorts] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [currUser, setCurrUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [cohort, setCohort] = useState('');
-  const [newAdmin, setNewAdmin] = React.useState('')
+  const [newAdmin, setNewAdmin] = useState('');
+  const [userAdmin, setUserAdmin] = useState(false);
 
   //******************** handler functions */
 
@@ -26,27 +27,27 @@ const App = () => {
   };
   const handlePassword = (e) => setPassword(e.target.value);
   const handleCohort = (e) => setCohort(e.target.value);
-  const handleAdmin = (e) => setNewAdmin(e.target.value)
+  const handleAdmin = (e) => setNewAdmin(e.target.value);
 
   //************************ fetch requests ************************* */
   const navigate = useNavigate();
 
-  React.useEffect(()=>{
+  useEffect(() => {
     const cookieInfo = document.cookie;
     console.log(cookieInfo);
-    const cookieName = cookieInfo.slice(0,8)
-    if (cookieName==='codehort'){
-      navigate('/')
+    const cookieName = cookieInfo.slice(0, 8);
+    if (cookieName === 'codehort') {
+      navigate('/');
     } else {
-      navigate('/login')
+      navigate('/login');
     }
-  }, [])
+  }, []);
 
   function createUser() {
-    fetch("/user/signup", {
-      method: "POST",
+    fetch('/user/signup', {
+      method: 'POST',
       headers: {
-        "Content-Type": "Application/JSON",
+        'Content-Type': 'Application/JSON',
       },
       body: JSON.stringify({
         username,
@@ -58,14 +59,14 @@ const App = () => {
 
     // .then(setLoggedIn(true))
     // .then(res => setCurrUser(res.user))
-    return navigate("/login");
+    return navigate('/login');
   }
   async function login() {
     try {
-      let res = await fetch("/user/login", {
-        method: "POST",
+      let res = await fetch('/user/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "Application/JSON",
+          'Content-Type': 'Application/JSON',
         },
         body: JSON.stringify({
           username: username,
@@ -75,38 +76,48 @@ const App = () => {
       res = await res.json();
       setCurrUser(res);
 
-      setLoggedIn(true)
-      setNewAdmin(res.isAdmin)
-      if (res.isAdmin){
-        console.log(newAdmin)
-        return navigate('/')
+      setLoggedIn(true);
+      setNewAdmin(res.isAdmin);
+      setUserAdmin(res.isAdmin);
+      if (res.isAdmin) {
+        console.log(newAdmin);
+        return navigate('/');
       }
-      return navigate("/Profile")
+      return navigate('/Profile');
     } catch (error) {
       console.log(error);
     }
   }
   const signout = () => {
-    console.log('clicked signout')
+    console.log('clicked signout');
     setLoggedIn(false);
     //setUser("");
     // deleting cookie should happen here on the back end!
     fetch('/user/logout')
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-      return navigate('/login');
-    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return navigate('/login');
+      });
   };
 
   function getAllCohorts() {
-    fetch("/cohort", { method: "GET" })
+    fetch('/cohort', { method: 'GET' })
       .then((response) => response.json())
       .then((response) => {
         setAllCohorts(response);
-        console.log("app component all cohorts", allCohorts);
+        response.sort((a, b) => {
+          if (a.cohort < b.cohort) {
+            return -1;
+          }
+          if (a.cohort > b.cohort) {
+            return 1;
+          }
+        });
+        setAllCohorts(response);
+        console.log('app component all cohorts', allCohorts);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   }
 
   useEffect(() => {
@@ -114,38 +125,55 @@ const App = () => {
   }, []);
 
   if (!allCohorts) return <Loading />;
-  console.log("app component all cohorts", allCohorts);
+  console.log('app component all cohorts', allCohorts);
 
   return (
     <div className="">
       <Nav currUser={currUser} signout={signout} loggedIn={loggedIn} />
       <Routes>
-        <Route path="/" element={<Home
-          allCohorts={allCohorts}
-          getAllCohorts={getAllCohorts}
-          createUser={createUser}
-        />} />
-        <Route path="/login" element={<Login
-          username={username}
-          password={password}
-          handlePassword={handlePassword}
-          handleUsername={handleUsername}
-          login={login}
-        />} />
-        <Route path="/signup" element={<Signup
-          username={username}
-          password={password}
-          handleCohort={handleCohort}
-          cohort={cohort}
-          handlePassword={handlePassword}
-          handleUsername={handleUsername}
-          createUser={createUser} 
-          handleAdmin={handleAdmin}
-          newAdmin={newAdmin}/>} />
-        <Route path="/Profile" element={<Profile
-          currUser={currUser}
-          newAdmin={newAdmin}
-        />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              allCohorts={allCohorts}
+              getAllCohorts={getAllCohorts}
+              createUser={createUser}
+              userAdmin={userAdmin}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              username={username}
+              password={password}
+              handlePassword={handlePassword}
+              handleUsername={handleUsername}
+              login={login}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Signup
+              username={username}
+              password={password}
+              handleCohort={handleCohort}
+              cohort={cohort}
+              handlePassword={handlePassword}
+              handleUsername={handleUsername}
+              createUser={createUser}
+              handleAdmin={handleAdmin}
+              newAdmin={newAdmin}
+            />
+          }
+        />
+        <Route
+          path="/Profile"
+          element={<Profile currUser={currUser} newAdmin={newAdmin} />}
+        />
         <Route path="/add" element={<Add />} />
       </Routes>
     </div>
