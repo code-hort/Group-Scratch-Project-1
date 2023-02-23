@@ -19,6 +19,16 @@ router.patch(
   }
 );
 
+router.patch(
+  '/volunteer/:cohort',
+  cohortController.volunteerUser,
+  (req, res, next) => {
+    const user = res.locals.user;
+    const cohort = res.locals.cohort;
+    res.status(200).json({ cohort: cohort, user: user });
+  }
+);
+
 router.get('/:cohort', cohortController.getCohort, (req, res, next) => {
   res.status(200).json(res.locals.cohort);
 });
@@ -37,7 +47,7 @@ cohortController.deleteCohort,
 // )
 router.get(
   '/',
-  //sessionController.checkSession,
+  // sessionController.checkSession,
   cohortController.getAllCohorts,
   (req, res, next) => {
     res.status(200).json(res.locals.cohorts);
