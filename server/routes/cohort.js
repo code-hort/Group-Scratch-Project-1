@@ -47,7 +47,7 @@ cohortController.deleteCohort,
 // )
 router.get(
   '/',
-  //sessionController.checkSession,
+  // sessionController.checkSession,
   cohortController.getAllCohorts,
   (req, res, next) => {
     res.status(200).json(res.locals.cohorts);

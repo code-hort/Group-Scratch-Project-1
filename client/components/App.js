@@ -37,6 +37,15 @@ const App = () => {
     console.log(cookieInfo);
     const cookieName = cookieInfo.slice(0, 8);
     if (cookieName === 'codehort') {
+      fetch('/user/getUser')
+      .then((response) => response.json())
+      .then((response) => {
+        setCurrUser(response);
+        setLoggedIn(true);
+        setNewAdmin(response.isAdmin);
+        setUserAdmin(response.isAdmin);
+      })
+
       navigate('/');
     } else {
       navigate('/login');
