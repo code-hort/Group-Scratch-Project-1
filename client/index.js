@@ -11,5 +11,5 @@ const root = createRoot(domeNode);
 root.render(
   <BrowserRouter> 
    <App />
-     </BrowserRouter>
+  </BrowserRouter>
 );
