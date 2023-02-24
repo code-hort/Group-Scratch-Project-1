@@ -17,12 +17,6 @@ const userController = {
       });
       user.save();
 
-      const student = await new Student({
-        username: req.body.username,
-          cohort: req.body.cohort,
-      });
-      student.save();
-
       if (adminRole === true) {
         const cohort = await Cohort.findOneAndUpdate(
           { cohort: req.body.cohort },
@@ -39,7 +33,7 @@ const userController = {
         res.locals.cohort = cohort;
       }
       res.locals.user = user;
-      
+
       return next();
     } catch (err) {
       return next({
@@ -69,8 +63,6 @@ const userController = {
         { new: true }
       );
       user.save();
-      //possibly redirect to signup page with then
-
       res.locals.user = user;
       return next();
     } catch (err) {

@@ -88,7 +88,7 @@ const cohortController = {
 
   async chosenUser(req, res, next) {
     try {
-      const user = await Student.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { username: req.body.username },
         { $inc: { participation: 1 } },
         { new: true }
@@ -115,7 +115,7 @@ const cohortController = {
 
   async volunteerUser(req, res, next) {
     try {
-      const user = await Student.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { username: req.body.username },
         { $inc: { participation: 1 } },
         { new: true }
