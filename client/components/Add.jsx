@@ -16,17 +16,17 @@ const Add = () => {
     e.preventDefault();
     try {
       console.log('about to create new student');
-      const res = await fetch('/cohort/addStudent', {
+      const res = await fetch('/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/JSON',
         },
         body: JSON.stringify({
           username: newStudent,
+          password: 'password',
           cohort: newStudentCohort,
         }),
       });
-      console.log("")
       if (res.ok) {
         alert(
           `Successfully added ${newStudent} to Cohort ${newStudentCohort}!`

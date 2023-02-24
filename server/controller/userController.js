@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
 const Cohort = require('../model/cohortModel');
-const Student = require('../model/studentModel');
 const { findOneAndUpdate } = require('../model/cohortModel');
 
 const userController = {
@@ -64,7 +63,7 @@ const userController = {
 
   async addpoint(req, res, next) {
     try {
-      const user = await Student.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { username: req.body.username },
         { $inc: { participation: 1 } },
         { new: true }

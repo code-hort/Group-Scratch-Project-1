@@ -1,7 +1,6 @@
 const { findOne } = require('../model/cohortModel');
 const Cohort = require('../model/cohortModel');
 const User = require('../model/userModel');
-const Student = require('../model/studentModel');
 
 const cohortController = {
   async getCohort(req, res, next) {
@@ -29,32 +28,6 @@ const cohortController = {
         log: `err: ${err}`,
         status: 500,
         message: { err: 'error in cohortcontroller.getAllCohorts middleware' },
-      });
-    }
-  },
-
-  async addStudent(req, res, next) {
-    console.log("made it")
-    try {
-        const student = await new Student({
-          username: req.body.username,
-            cohort: req.body.cohort,
-        });
-        console.log(student);
-        student.save();
-          
-        const cohort = await Cohort.findOneAndUpdate(
-            { cohort: req.body.cohort },
-            { $push: { students: student } },
-            { upsert: true, new: true }
-          );
-
-      return next();
-    } catch (err) {
-      return next({
-        log: `err: ${err}`,
-        status: 500,
-        message: { err: 'error in cohortcontroller.addStudent middleware' },
       });
     }
   },

@@ -41,11 +41,10 @@ cohortController.deleteCohort,
 }
 )
 
-router.post('/addStudent',
-cohortController.addStudent,
-(req, res, next) => {
-  res.status(200).json("student added");
-})
+// router.patch('/addStudent',
+// cohortController.addStudent,
+// res.status(200).json(res.locals.cohort)
+// )
 router.get(
   '/',
   // sessionController.checkSession,
