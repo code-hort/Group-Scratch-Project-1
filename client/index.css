@@ -13,8 +13,8 @@
   border: 5px solid black;
   border-radius: 50%;
   position: absolute;
-  left: 37vw;
-  top: 20vh;
+  display: grid;
+  place-content: center;
   overflow: hidden;
   z-index: 1;
 }
@@ -70,7 +70,7 @@ p#remove-skew {
   border-right: 20px solid transparent;
   border-top: 20px solid gray;
   position: absolute;
-  left: 47vw;
-  top: 20vh;
+  display: grid;
+  place-content: center;
   z-index: 12;
 }
