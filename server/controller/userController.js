@@ -16,8 +16,14 @@ const userController = {
         cohort: req.body.cohort,
         isAdmin: adminRole,
       });
-
       user.save();
+
+      const student = await new Student({
+        username: req.body.username,
+          cohort: req.body.cohort,
+      });
+      student.save();
+
       if (adminRole === true) {
         const cohort = await Cohort.findOneAndUpdate(
           { cohort: req.body.cohort },
